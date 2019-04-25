@@ -1,2 +1,10 @@
 /Codigo Fuente/.idea
 desktop.ini
+Codigo Fuente/tests/vendor/phpunit/phpunit/tests/end-to-end/report-tests-performing-assertions-when-annotated-with-does-not-perform-assertions.phpt
+Codigo Fuente/tests/vendor/phpunit/phpunit/tests/end-to-end/mock-objects/generator/class_with_method_with_nullable_typehinted_variadic_arguments.phpt
+Codigo Fuente/tests/vendor/phpunit/phpunit/tests/end-to-end/mock-objects/generator/class_implementing_interface_dont_call_parent_constructor.phpt
+Codigo Fuente/tests/vendor/phpunit/php-code-coverage/tests/_files/Report/XML/CoverageForClassWithAnonymousFunction/source_with_class_and_anonymous_function.php.xml
+Codigo Fuente/tests/vendor/phpunit/php-code-coverage/tests/_files/Report/HTML/CoverageForClassWithAnonymousFunction/source_with_class_and_anonymous_function.php.html
+Codigo Fuente/tests/vendor/phpunit/phpunit/tests/end-to-end/mock-objects/generator/namespaced_class_implementing_interface_call_parent_constructor.phpt
+Codigo Fuente/tests/vendor/phpunit/phpunit/tests/end-to-end/mock-objects/generator/namespaced_class_implementing_interface_dont_call_parent_constructor.phpt
+Codigo Fuente/tests/vendor/phpunit/phpunit/tests/end-to-end/mock-objects/generator/nonexistent_class_with_namespace_starting_with_separator.phpt

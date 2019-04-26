@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="..\..\wwwroot\lib\bootstrap\css\bootstrap.min.css">
     <link rel="stylesheet" href="..\..\wwwroot\lib\daterangepicker\daterangepicker.css">
     <link rel="stylesheet" href="..\..\wwwroot\lib\alertifyjs\css\alertify.min.css">
-    <link rel="stylesheet" href="..\..\wwwroot\css\login.css">
+    <link rel="stylesheet" href="..\..\wwwroot\css\seguridad\login.css">
 </head>
 
 <body>

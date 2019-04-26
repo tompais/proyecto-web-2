@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="..\..\wwwroot\lib\bootstrap\css\bootstrap.min.css">
     <link rel="stylesheet" href="..\..\wwwroot\lib\daterangepicker\daterangepicker.css">
     <link rel="stylesheet" href="..\..\wwwroot\lib\alertifyjs\css\alertify.min.css">
+    <link rel="stylesheet" href="..\..\wwwroot\lib\fontawesome\css\all.min.css">
     <link rel="stylesheet" href="..\..\wwwroot\css\seguridad\login.css">
 </head>
 
@@ -50,6 +51,7 @@
     </div>
     <script src="..\..\wwwroot\lib\jquery\jquery-3.4.0.min.js"></script>
     <script src="..\..\wwwroot\lib\bootstrap\js\bootstrap.min.js"></script>
+    <script src="..\..\wwwroot\lib\fontawesome\js\all.min.js"></script>
     <script src="..\..\wwwroot\lib\popper\popper.min.js"></script>
     <script src="..\..\wwwroot\lib\tooltip\tooltip.min.js"></script>
     <script src="..\..\wwwroot\lib\moment\moment-with-locales.min.js"></script>

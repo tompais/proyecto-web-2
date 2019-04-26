@@ -18,7 +18,7 @@
 <body>
     <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+    <![endif]-->
     <form action="login.php" method="post">
         <label for="inputUsuario">Usuario</label>
         <br>
@@ -61,7 +61,8 @@
         if($usuario == $fila[0] && $pass == $fila[1]) {
             header("location: bienvenido.php");
             exit();
-        } else {
+        }
+        else {
             die("Tu no eres mi padre");
         }
     }

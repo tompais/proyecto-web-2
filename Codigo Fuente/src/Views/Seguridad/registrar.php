@@ -53,18 +53,18 @@
             </div>
 
             <div class="form-group">
-                <label for="inputContraseña">Contraseña</label>
-                <input type="password" name="inputContraseña" id="inputContraseña" class="form-control" placeholder="Ej: juan1234">
-                <div id="errorContraseña" class="error"> <i class="fas fa-exclamation-triangle"></i> Ingrese su contraseña</div>
-                <div id="errorContraseña2" class="error"> <i class="fas fa-exclamation-triangle"></i> Su contraseña debe tener entre 6 a 15 digitos</div>
-                <div id="errorContraseña3" class="error"> <i class="fas fa-exclamation-triangle"></i> Solo letras y numero por favor</div>
+                <label for="inputPassword">Contraseña</label>
+                <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Ej: juan1234">
+                <div id="errorPassword" class="error"> <i class="fas fa-exclamation-triangle"></i> Ingrese su contraseña</div>
+                <div id="errorPassword2" class="error"> <i class="fas fa-exclamation-triangle"></i> Su contraseña debe tener entre 6 a 15 digitos</div>
+                <div id="errorPassword3" class="error"> <i class="fas fa-exclamation-triangle"></i> Solo letras y numero por favor</div>
             </div>
 
             <div class="form-group">
-                <label for="inputReContraseña">Confirme su Contraseña</label>
-                <input type="password" name="inputReContraseña" id="inputReContraseña" class="form-control">
-                <div id="errorReContraseña" class="error"> <i class="fas fa-exclamation-triangle"></i> Confirme su contraseña</div>
-                <div id="errorReContraseña2" class="error"> <i class="fas fa-exclamation-triangle"></i> Sus contraseñas no coinciden</div>
+                <label for="inputRePassword">Confirme su Contraseña</label>
+                <input type="password" name="inputRePassword" id="inputRePassword" class="form-control">
+                <div id="errorRePassword" class="error"> <i class="fas fa-exclamation-triangle"></i> Confirme su contraseña</div>
+                <div id="errorRePassword2" class="error"> <i class="fas fa-exclamation-triangle"></i> Sus contraseñas no coinciden</div>
             </div>
 
             <div class="form-group">
@@ -150,7 +150,7 @@
     <script src="..\..\wwwroot\lib\alertifyjs\alertify.min.js"></script>
     <script src="..\..\wwwroot\lib\validate\validate.min.js"></script>
     <script src="..\..\wwwroot\js\seguridad\registrar.js"></script>
-    <script src="..\..\wwwroot\js\validacionesLogin\validacionRegistrar.js"></script>
+    <script src="..\..\wwwroot\js\seguridad\validacionRegistrar.js"></script>
 </body>
 
 </html>

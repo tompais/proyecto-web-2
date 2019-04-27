@@ -69,7 +69,7 @@
     <script src="..\..\wwwroot\lib\daterangepicker\daterangepicker.js"></script>
     <script src="..\..\wwwroot\lib\alertifyjs\alertify.min.js"></script>
     <script src="..\..\wwwroot\lib\validate\validate.min.js"></script>
-    <script src="..\..\wwwroot\js\validacionesLogin\validacionLogin.js"></script>
+    <script src="..\..\wwwroot\js\seguridad\validacionLogin.js"></script>
 </body>
 
 </html>

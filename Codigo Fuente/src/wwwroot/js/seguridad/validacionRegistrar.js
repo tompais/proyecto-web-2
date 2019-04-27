@@ -11,8 +11,8 @@ $(document).ready(function() {
         var nombre = $('#inputNombre').val();
         var apellido = $('#inputApellido').val();
         var nickname = $('#inputNickname').val();
-        var pass = $('#inputContraseña').val();
-        var rePass = $('#inputReContraseña').val();
+        var pass = $('#inputPassword').val();
+        var rePass = $('#inputRePassword').val();
         var email = $('#inputEmail').val();
         var fecha = $('#inputFechaNacimiento').val();
         var prov = $('#inputProvincia').val();
@@ -101,45 +101,45 @@ $(document).ready(function() {
         /* Contraseña */
 
         if (pass.length === 0){
-            $("#errorContraseña").fadeIn("slow");
+            $("#errorPassword").fadeIn("slow");
             return false;
         }
         else{
-            $("#errorContraseña").fadeOut();
+            $("#errorPassword").fadeOut();
         }
 
         if (pass.length < 6 && pass.length < 15) {
-            $("#errorContraseña2").fadeIn("slow");
+            $("#errorPassword2").fadeIn("slow");
             return false;
         }
         else{
-            $("#errorContraseña2").fadeOut();
+            $("#errorPassword2").fadeOut();
         }
 
         if (!exprLetAndNum.test(pass)){
-            $("#errorContraseña3").fadeIn("slow");
+            $("#errorPassword3").fadeIn("slow");
             return false;
         }
         else{
-            $("#errorContraseña3").fadeOut();
+            $("#errorPassword3").fadeOut();
         }
 
         /* Confirmacion de Contraseña */
 
         if (rePass.length === 0){
-            $("#errorReContraseña").fadeIn("slow");
+            $("#errorRePassword").fadeIn("slow");
             return false;
         }
         else{
-            $("#errorReContraseña").fadeOut();
+            $("#errorRePassword").fadeOut();
         }
 
         if ( rePass !== pass ){
-            $("#errorReContraseña2").fadeIn("slow");
+            $("#errorRePassword2").fadeIn("slow");
             return false;
         }
         else {
-            $("#errorReContraseña2").fadeOut();
+            $("#errorRePassword2").fadeOut();
         }
 
         /* Email */

@@ -32,19 +32,41 @@
                 <button type="submit" name="btnRecuperarPassword" id="btnRecuperarPassword" class="btn btn-primary">Recuperar Contraseña</button>
             </div>
         </form>
-        <?php
+        <?php        
+        $regex = array(
+                "usuario" => "/^[0-9a-zA-Z]+$/",
+                "email" => "/^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/",
+                );
         if ($_POST != null && count($_POST) != 0){
-            if ( !preg_match($regex["usuario"], $_POST[inputEmailOrNick] or !preg_match($regex["email"], $_POST[inputEmailOrNick])) {
+            if ( !preg_match($regex["usuario"], $_POST["inputEmailOrNick"]) or !preg_match($regex["email"], $_POST["inputEmailOrNick"]) ) {
                 //usuario incorrecto
                 die("Usuario incorrecto");
             }
-            $usuario = strtolower($_POST[inputEmailOrNick] );
-            $password = strtoupper( sha1($_POST[inputPassword]) );
+            $usuario = strtolower($_POST["inputEmailOrNick"] );
 
         } else {
             //usuario incorrecto
             die("Login incorrecto");
         }
+                    
+        /*  
+            include("..\..\Codigo Fuente\src\Helpers\Conexion.php");
+            $db = array(
+            "user" => "root";
+                "pass" => "";
+                "db" => "pw2";
+            );
+            $query = "SELECT * FROM usuario  where ";
+            $conn = new Conexion( $db[user],$db[pass],$db[db];
+
+            $conn->conectar();
+            
+            Sresultado = $conn=>ejecutarQuery($sql);
+            if(!Sresultado){
+                die("Ha ocurrido un error al ejecutar la query");
+            }
+            $conn->desconectar();
+            */        
         ?>
         
     </div>

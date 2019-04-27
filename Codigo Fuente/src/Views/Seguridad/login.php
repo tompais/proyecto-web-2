@@ -56,7 +56,7 @@
                 <small>¿Olvidaste tu contraseña? <a href="forgotPassword.php">Click aquí</a></small>
                 <small>¿Primera vez aquí? <a href="registrar.php">Regístrate</a></small>
             </div>
-            <?php>
+            <?php
                 
                 $regex = array(
                 "usuario" => "/^[0-9a-zA-Z]+$/",
@@ -64,19 +64,20 @@
                 );
                 include("..\..\Codigo Fuente\src\Helpers\Conexion.php");
                 $db = array(
-                    "user" => "root";
-                    "pass" => "";
-                    "db" => "pw2";
+                    "user" => "root",
+                    "pass" => "",
+                    "db" => "pw2",
                 );
                 $query = "SELECT * FROM usuario  where ";
             
                 if ($_POST != null && count($_POST) != 0){
-                    if ( !preg_match($regex["usuario"], $_POST[inputEmailOrNick] or !preg_match($regex["email"], $_POST[inputEmailOrNick])) {
+                    if ( !preg_match($regex["usuario"], $_POST["inputEmailOrNick"]) or !preg_match($regex["email"], $_POST["inputEmailOrNick"]) ) 
+                        //{
                         //usuario incorrecto
-                        exit();
-                    }
-                    $usuario = strtolower($_POST[inputEmailOrNick] );
-                    $password = strtoupper( sha1($_POST[inputPassword]) );
+                        die("Login incorrecto");
+                        //}
+                    $usuario = strtolower($_POST["inputEmailOrNick"] );
+                    $password = strtoupper( sha1($_POST["inputPassword"]) );
                     
                 } else {
                     //usuario incorrecto

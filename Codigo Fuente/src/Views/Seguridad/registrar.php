@@ -140,10 +140,10 @@
             <?php
                 $gerex = new array(
                     exprEmail => "/^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/",
-                    exprLet => "/^[a-zA-Z]+$/";
-                    exprLetAndNum => "/^[0-9a-zA-Z]+$/";
-                    exprNum => "/^[0-9]+$/";
-                    exprLetAndSpace =>"/^[a-zA-Z]+(\s*[a-zA-Z]*)*[a-zA-Z]+$/";
+                    exprLet => "/^[a-zA-Z]+$/",
+                    exprLetAndNum => "/^[0-9a-zA-Z]+$/",
+                    exprNum => "/^[0-9]+$/",
+                    exprLetAndSpace =>"/^[a-zA-Z]+(\s*[a-zA-Z]*)*[a-zA-Z]+$/",
                 );
                 
              if ($_POST != null && count($_POST) != 0){

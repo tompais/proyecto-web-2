@@ -27,8 +27,8 @@
         <form action="login.php" method="post" class="border rounded shadow w-25 mx-auto p-4 mt-5">
             <h4 class="mb-4 text-center">Login de Usuario</h4>
             <div class="form-group">
-                <label for="Email">Email</label>
-                <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="ejemplo@correo.com" required>
+                <label for="inputEmailOrNick">Nickname/Email</label>
+                <input type="text" name="inputEmailOrNick" id="inputEmailOrNick" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="inputPassword">Contraseña</label>

@@ -62,7 +62,8 @@
                 "usuario" => "/^[0-9a-zA-Z]+$/",
                 "email" => "/^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/",
                 );
-                include("..\..\Codigo Fuente\src\Helpers\Conexion.php");
+                //include("..\..\Codigo Fuente\src\Helpers\Conexion.php");
+                include("..\..\Helpers\Conexion.php");
                 $db = array(
                     "user" => "root",
                     "pass" => "",

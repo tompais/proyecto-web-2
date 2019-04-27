@@ -196,7 +196,8 @@
                 die("Altura incorrecta")
                 
             /*  
-            include("..\..\Codigo Fuente\src\Helpers\Conexion.php");
+            //include("..\..\Codigo Fuente\src\Helpers\Conexion.php");
+                include("..\..\Helpers\Conexion.php");
             $db = array(
             "user" => "root";
                 "pass" => "";

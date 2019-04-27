@@ -28,7 +28,7 @@
             <h4 class="mb-4 text-center">Login de Usuario</h4>
             <div class="form-group">
                 <label for="Email">Email</label>
-                <input type="text" name="inputEmail" id="inputEmail" class="form-control" placeholder="ejemplo@correo.com" required>
+                <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="ejemplo@correo.com" required>
             </div>
             <div class="form-group">
                 <label for="inputPassword">Contraseña</label>
@@ -45,7 +45,7 @@
             </div>
             <div>
                 <small>¿Olvidaste tu contraseña? <a href="#">Click aquí</a></small>
-                <small>¿Primera vez aquí? <a href="#">Regístrate</a></small>
+                <small>¿Primera vez aquí? <a href="registrar.php">Regístrate</a></small>
             </div>
         </form>
     </div>
@@ -55,6 +55,7 @@
     <script src="..\..\wwwroot\lib\popper\popper.min.js"></script>
     <script src="..\..\wwwroot\lib\tooltip\tooltip.min.js"></script>
     <script src="..\..\wwwroot\lib\moment\moment-with-locales.min.js"></script>
+    <script src="..\..\wwwroot\lib\JQuery-Mask-Plugin\dist\jquery.mask.min.js"></script>
     <script src="..\..\wwwroot\lib\daterangepicker\daterangepicker.js"></script>
     <script src="..\..\wwwroot\lib\alertifyjs\alertify.min.js"></script>
     <script src="..\..\wwwroot\lib\validate\validate.min.js"></script>

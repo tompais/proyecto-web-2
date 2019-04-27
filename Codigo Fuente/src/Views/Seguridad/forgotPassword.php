@@ -32,6 +32,21 @@
                 <button type="submit" name="btnRecuperarPassword" id="btnRecuperarPassword" class="btn btn-primary">Recuperar Contraseña</button>
             </div>
         </form>
+        <?php
+        if ($_POST != null && count($_POST) != 0){
+            if ( !preg_match($regex["usuario"], $_POST[inputEmailOrNick] or !preg_match($regex["email"], $_POST[inputEmailOrNick])) {
+                //usuario incorrecto
+                die("Usuario incorrecto");
+            }
+            $usuario = strtolower($_POST[inputEmailOrNick] );
+            $password = strtoupper( sha1($_POST[inputPassword]) );
+
+        } else {
+            //usuario incorrecto
+            die("Login incorrecto");
+        }
+        ?>
+        
     </div>
     <script src="..\..\wwwroot\lib\jquery\jquery-3.4.0.min.js"></script>
     <script src="..\..\wwwroot\lib\bootstrap\js\bootstrap.min.js"></script>

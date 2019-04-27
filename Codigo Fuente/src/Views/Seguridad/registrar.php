@@ -62,7 +62,8 @@
 
             <div class="form-group">
                 <label for="inputRePassword">Confirme su Contraseña</label>
-                <input type="password" name="inputRePassword" id="inputRePassword" class="form-control">
+                <input type="password" name="inputRePassword" id="inputRePassword" class="form-control" placeholder="Ej: juan1234" aria-describedby="helpIdInputRePassword">
+                <small id="helpIdInputRePassword" class="text-muted">Asegúrese de que coincidan</small>
                 <div id="errorRePassword" class="error"> <i class="fas fa-exclamation-triangle"></i> Confirme su contraseña</div>
                 <div id="errorRePassword2" class="error"> <i class="fas fa-exclamation-triangle"></i> Sus contraseñas no coinciden</div>
             </div>

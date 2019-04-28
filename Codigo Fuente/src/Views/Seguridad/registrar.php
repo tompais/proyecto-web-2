@@ -214,7 +214,7 @@
 
             //direccion
             $query = "INSERT INTO Direccion (Calle, Altura,Departamento, Piso) VALUES ('$calle','$altura','$dto','$piso')";
-            $resultado = $conn=>ejecutarQuery($query);
+            $resultado = $conn->ejecutarQuery($query);
             if(!$resultado){
                 die("Ha ocurrido un error al ejecutar la query");
             }
@@ -255,7 +255,7 @@
                 //traigo el permiso de usuario normal
             $query = "SELECT ID FROM Permiso WHERE Nombre_Permiso like ""normal""";
             
-            $resultado = $conn-ejecutarQuery($query);
+            $resultado = $conn->ejecutarQuery($query);
             if(!$resultado){
                 die("Ha ocurrido un error al ejecutar la query");
             }

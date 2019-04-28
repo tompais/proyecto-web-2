@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>Home</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
@@ -15,15 +15,7 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <?php
-
-        require_once("Helpers/Constantes.php");
-        require_once("Models/Usuario.php");
-
-        session_start();
-
-        echo "HOLA " . unserialize($_SESSION[Constantes::USUARIO])->getUsuario();
-        ?>
+        HOLA LOCO! TODO BIEN?
         <script src="" async defer></script>
     </body>
 </html>

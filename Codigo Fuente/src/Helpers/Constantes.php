@@ -2,16 +2,32 @@
 
 abstract class Constantes
 {
-    const USUARIO = "usuario";
-    const INPUTUSUARIO = "inputUsuario";
-    const INPUTPASS = "inputPassword";
-    const BTNLOGIN = "btnSubmit";
-    const HOST = "localhost";
-    const BDUSUARIO = "root";
-    const BDCLAVE = "";
-    const BASEDEDATOS = "pw";
+    //Input
+    const INPUTNOMBRE = "inputNombre";
+    const INPUTAPELLIDO = "inputApellido";
+    const INPUTNICKNAME = "inputNickname";
+    const INPUTEMAILORNICK = "inputEmailOrNick";
+    const INPUTPASSWORD = "inputPassword";
+    const INPUTREPASSWORD = "inputRePassword";
+    const INPUTEMAIL = "inputEmail";
+    const INPUTFECHANACIMIENTO = "inputFechaNacimiento";
+    const INPUTPROVINCIA = "inputProvincia";
+    const INPUTLOCALIDAD = "inputLocalidad";
+    const INPUTCALLE = "inputCalle";
+    const INPUTALTURA = "inputAltura";
+    const INPUTDEPTO = "inputDepto";
+    const INPUTPISO = "inputPiso";
+
+    //Botones
+    const BTNINGRESAR = "btnIngresar";
     const BTNREGISTRAR = "btnRegistrar";
-    const INPUTPASSCONFIRM = "inputConfirmPassword";
+
+    //Regex
+    const REGEXLETRASYNUMEROS = "/^[0-9a-zA-Z]+$/";
+    const REGEXEMAIL = "/^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/";
+    const REGEXSOLOLETRAS = "/^[a-zA-Z]+$/";
+    const REGEXLETRASYESPACIO = "/^[a-zA-Z]+(\s*[a-zA-Z]*)*[a-zA-Z]+$/";
+    const REGEXSOLONUMEROS = "/^[0-9]+$/";
 }
 
 

@@ -49,23 +49,31 @@
             die("Login incorrecto");
         }
                     
-        /*  
+        
             //include("..\..\Codigo Fuente\src\Helpers\Conexion.php");
             include("..\..\Helpers\Conexion.php");
+        /*
             $db = array(
             "user" => "root";
                 "pass" => "";
                 "db" => "pw2";
             );
-            $query = "SELECT * FROM usuario  where ";
-            $conn = new Conexion( $db[user],$db[pass],$db[db];
-
-            $conn->conectar();
+            */
+            $query = "SELECT Username, UPassword, Email FROM usuario where ";
+            //$conn = new Conexion( $db[user],$db[pass],$db[db];
+            $conn = new Conexion();
+            if( preg_match($regex["usuario"],$usuario) ) {
+                    $query .= "idUsuario like '$usuario'";
+                } else {
+                    $query .= "email like '$usuario'":
+                }
             
-            Sresultado = $conn=>ejecutarQuery($sql);
+            Sresultado = $conn=>ejecutarQuery($query);
+
             if(!Sresultado){
                 die("Ha ocurrido un error al ejecutar la query");
             }
+            //cosas a hacer para recuperar el password
             $conn->desconectar();
             */        
         ?>

@@ -71,7 +71,7 @@
                     "db" => "pw2",
                 );
                 */
-                $query = "SELECT Username, UPassword, Email FROM usuario  where ";
+                $query = "SELECT Username, UPassword, Email FROM usuario where ";
             
                 if ($_POST != null && count($_POST) != 0){
                     if ( !preg_match($regex["usuario"], $_POST["inputEmailOrNick"]) or !preg_match($regex["email"], $_POST["inputEmailOrNick"]) ) 
@@ -103,7 +103,7 @@
                 $fila = $conn->getFila(Sresultado);
                 //si el usuario ingresado es igual al usuario(db) o el mail ingresado es igual al mail(db)
                 if( ($usuario == $fila[0] or $usuario == $fila[3]) && $pass == $fila[1]) {
-                
+                //cosas a añadir a session
                 header("location: main.php");
                 exit();
                 }

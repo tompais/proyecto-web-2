@@ -74,6 +74,8 @@
                 die("Ha ocurrido un error al ejecutar la query");
             }
             //cosas a hacer para recuperar el password
+            
+    
             $conn->desconectar();
             */        
         ?>

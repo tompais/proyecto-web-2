@@ -159,6 +159,9 @@
                 $localidad = $_POST["inputLocalidad"];
                 $calle = $_POST["inputCalle"];
                 $altura = $_POST["inputAltura"];
+                $dto = $_POST["inputDepto"];
+                $piso = $_POST["inputPiso"];
+                
              } else {
                  die("no deberias estar aqui");
              }
@@ -195,25 +198,74 @@
             if( !preg_match($regex["exprNum"], $altura){
                 die("Altura incorrecta")
                 
-            /*  
+             
             //include("..\..\Codigo Fuente\src\Helpers\Conexion.php");
-                include("..\..\Helpers\Conexion.php");
+            /*
+            include("..\..\Helpers\Conexion.php");
             $db = array(
             "user" => "root";
                 "pass" => "";
                 "db" => "pw2";
             );
-            $query = "INSERT INTO usuarios VALUES("'$nickname','$pass')";
-            $conn = new Conexion( $db[user],$db[pass],$db[db];
+            */
+            //$query = "INSERT INTO usuarios VALUES('$nickname','$pass')";
+            //$conn = new Conexion( $db[user],$db[pass],$db[db];
+            $conn = new Conexion();
 
-            $conn->conectar();
-            
+            //direccion
+            $query = "INSERT INTO Direccion (Calle, Altura,Departamento, Piso) VALUES ('$calle','$altura','$dto','$piso')";
             Sresultado = $conn=>ejecutarQuery($query);
             if(!Sresultado){
                 die("Ha ocurrido un error al ejecutar la query");
             }
+
+            $query = "SELECT ID FROM Direccion WHERE Calle like '$calle'";
+            
+            Sresultado = $conn=>ejecutarQuery($query);
+            f(!Sresultado){
+                die("Ha ocurrido un error al ejecutar la query");
+            }
+            $direccion = $conn->getFila(Sresultado);
+            
+            //provincia
+            $query = "SELECT ID FROM Provincia WHERE Nombre like '$prov'";
+            
+            Sresultado = $conn=>ejecutarQuery($query);
+            f(!Sresultado){
+                die("Ha ocurrido un error al ejecutar la query");
+            }
+            $prov = $conn->getFila(Sresultado);
+            
+            //usuario
+            $query = "INSERT INTO Usuario (Nombre, Apellido, FechaNac, Username,UPassword, ID_Direccion, ID_Provincia) VALUES ('$nombre','$apellido','$fecha','$nickname','$pass','$direccion','$prov')";
+            Sresultado = $conn=>ejecutarQuery($query);
+            if(!Sresultado){
+                die("Ha ocurrido un error al ejecutar la query");
+            }
+
+            $query = "SELECT ID FROM Usuario WHERE Username like '$nickname'";
+            
+            Sresultado = $conn=>ejecutarQuery($query);
+            f(!Sresultado){
+                die("Ha ocurrido un error al ejecutar la query");
+            }
+            $IDUsuario = $conn->getFila(Sresultado);
+                
+            //seteo los permisos del usuario
+                //traigo el permiso de usuario normal
+            $query = "SELECT ID FROM Permiso WHERE Nombre_Permiso like ""normal""";
+            
+            Sresultado = $conn=>ejecutarQuery($query);
+            f(!Sresultado){
+                die("Ha ocurrido un error al ejecutar la query");
+            }
+            $IDPermisos = $conn->getFila(Sresultado);
+            
+            $query = "INSERT INTO PermisoUsuario (ID_Permiso, ID_Usuario) VALUES ('$IDPermisos','$IDUsuario')";
+            
+            
             $conn->desconectar();
-            */
+            
             ?>
 
         </form>

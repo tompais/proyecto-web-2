@@ -235,7 +235,7 @@
             if(!$resultado){
                 die("Ha ocurrido un error al ejecutar la query");
             }
-            $prov = $conn->getFila(Sresultado);
+            $prov = $conn->getFila($resultado);
             
             //usuario
             $query = "INSERT INTO Usuario (Nombre, Apellido, FechaNac, Username,UPassword, ID_Direccion, ID_Provincia) VALUES ('$nombre','$apellido','$fecha','$nickname','$pass','$direccion','$prov')";

@@ -166,38 +166,38 @@
                  die("no deberias estar aqui");
              }
             
-            if( strlen($nombre) > 15 or strlen($nombre) < 3 or !preg_match($regex["exprLet"], $nombre){
+            if( strlen($nombre) > 15 or strlen($nombre) < 3 or !preg_match($regex["exprLet"], $nombre) ){
                 die("Nombre incorrecto");
             }
-            if( strlen($apellido) > 15 or strlen($apellido) < 3 or !preg_match($regex["exprLet"], $apellido){
+            if( strlen($apellido) > 15 or strlen($apellido) < 3 or !preg_match($regex["exprLet"], $apellido) ){
                 die("Apellido incorrecto");
             }
-            if( strlen($nickname) > 15 or strlen($nickname) < 3 or !preg_match($regex["exprLet"], $nickname){
+            if( strlen($nickname) > 15 or strlen($nickname) < 3 or !preg_match($regex["exprLet"], $nickname) ){
                 die("Nickname incorrecto");
             }
-            if( strlen($pass) > 15 or strlen($pass) < 6  or !preg_match($regex["exprLetAndNum"], $pass){
+            if( strlen($pass) > 15 or strlen($pass) < 6  or !preg_match($regex["exprLetAndNum"], $pass) ){
                 die("Contraseña incorrecta");
             }
             if( strlen($rePass) < 6  or $rePass != $Pass){
                 die("Confirmar contraseña incorrecta");
             }
             // @.com = 5caracteres
-            if( strlen($email) < 5  or !preg_match($regex["exprEmail"], $email){
+            if( strlen($email) < 5  or !preg_match($regex["exprEmail"], $email) ){
                 die("Email incorrecto");
             }
                
-             if( strlen($prov) < 3  or !preg_match($regex["exprLet"], $prov){
+             if( strlen($prov) < 3  or !preg_match($regex["exprLet"], $prov) ){
                 die("Provincia incorrecta");
             }  
-             if( strlen($localidad) < 3  or !preg_match($regex["exprLetAndSpace"], $localidad){
+             if( strlen($localidad) < 3  or !preg_match($regex["exprLetAndSpace"], $localidad) ){
                 die("Localidad incorrecta");
             }  
-             if( strlen($calle) < 3  or !preg_match($regex["exprLetAndSpace"], $calle){
+             if( strlen($calle) < 3  or !preg_match($regex["exprLetAndSpace"], $calle) ){
                 die("Calle incorrecta");
             }  
-            if( !preg_match($regex["exprNum"], $altura){
+            if( !preg_match($regex["exprNum"], $altura) ){
                 die("Altura incorrecta")
-                
+            }
              
             //include("..\..\Codigo Fuente\src\Helpers\Conexion.php");
             /*
@@ -214,52 +214,52 @@
 
             //direccion
             $query = "INSERT INTO Direccion (Calle, Altura,Departamento, Piso) VALUES ('$calle','$altura','$dto','$piso')";
-            Sresultado = $conn=>ejecutarQuery($query);
-            if(!Sresultado){
+            $resultado = $conn=>ejecutarQuery($query);
+            if(!$resultado){
                 die("Ha ocurrido un error al ejecutar la query");
             }
 
             $query = "SELECT ID FROM Direccion WHERE Calle like '$calle'";
             
-            Sresultado = $conn=>ejecutarQuery($query);
-            f(!Sresultado){
+            Sresultado = $conn->ejecutarQuery($query);
+            if(!$resultado){
                 die("Ha ocurrido un error al ejecutar la query");
             }
-            $direccion = $conn->getFila(Sresultado);
+            $direccion = $conn->getFila($resultado);
             
             //provincia
             $query = "SELECT ID FROM Provincia WHERE Nombre like '$prov'";
             
-            Sresultado = $conn=>ejecutarQuery($query);
-            f(!Sresultado){
+            $resultado = $conn->ejecutarQuery($query);
+            if(!$resultado){
                 die("Ha ocurrido un error al ejecutar la query");
             }
             $prov = $conn->getFila(Sresultado);
             
             //usuario
             $query = "INSERT INTO Usuario (Nombre, Apellido, FechaNac, Username,UPassword, ID_Direccion, ID_Provincia) VALUES ('$nombre','$apellido','$fecha','$nickname','$pass','$direccion','$prov')";
-            Sresultado = $conn=>ejecutarQuery($query);
-            if(!Sresultado){
+            $resultado = $conn=>ejecutarQuery($query);
+            if(!$resultado){
                 die("Ha ocurrido un error al ejecutar la query");
             }
 
             $query = "SELECT ID FROM Usuario WHERE Username like '$nickname'";
             
-            Sresultado = $conn=>ejecutarQuery($query);
-            f(!Sresultado){
+            $resultado = $conn->ejecutarQuery($query);
+            if(!$resultado){
                 die("Ha ocurrido un error al ejecutar la query");
             }
-            $IDUsuario = $conn->getFila(Sresultado);
+            $IDUsuario = $conn->getFila($resultado);
                 
             //seteo los permisos del usuario
                 //traigo el permiso de usuario normal
             $query = "SELECT ID FROM Permiso WHERE Nombre_Permiso like ""normal""";
             
-            Sresultado = $conn=>ejecutarQuery($query);
-            f(!Sresultado){
+            $resultado = $conn-ejecutarQuery($query);
+            if(!$resultado){
                 die("Ha ocurrido un error al ejecutar la query");
             }
-            $IDPermisos = $conn->getFila(Sresultado);
+            $IDPermisos = $conn->getFila($resultado);
             
             $query = "INSERT INTO PermisoUsuario (ID_Permiso, ID_Usuario) VALUES ('$IDPermisos','$IDUsuario')";
             

@@ -217,6 +217,7 @@
             $query = "INSERT INTO Direccion (Calle, Altura,Departamento, Piso) VALUES ('$calle','$altura','$dto','$piso')";
             $resultado = $conn->ejecutarQuery($query);
             if(!$resultado){
+                $conn->desconectar();
                 die("Ha ocurrido un error al ejecutar la query");
             }
 
@@ -224,6 +225,7 @@
             
             Sresultado = $conn->ejecutarQuery($query);
             if(!$resultado){
+                $conn->desconectar();
                 die("Ha ocurrido un error al ejecutar la query");
             }
             $direccion = $conn->getFila($resultado);
@@ -233,6 +235,7 @@
             
             $resultado = $conn->ejecutarQuery($query);
             if(!$resultado){
+                $conn->desconectar();
                 die("Ha ocurrido un error al ejecutar la query");
             }
             $prov = $conn->getFila($resultado);
@@ -241,6 +244,7 @@
             $query = "INSERT INTO Usuario (Nombre, Apellido, FechaNac, Username,UPassword, ID_Direccion, ID_Provincia) VALUES ('$nombre','$apellido','$fecha','$nickname','$pass','$direccion','$prov')";
             $resultado = $conn=>ejecutarQuery($query);
             if(!$resultado){
+                $conn->desconectar();
                 die("Ha ocurrido un error al ejecutar la query");
             }
 
@@ -248,6 +252,7 @@
             
             $resultado = $conn->ejecutarQuery($query);
             if(!$resultado){
+                $conn->desconectar();
                 die("Ha ocurrido un error al ejecutar la query");
             }
             $IDUsuario = $conn->getFila($resultado);
@@ -258,6 +263,7 @@
             
             $resultado = $conn->ejecutarQuery($query);
             if(!$resultado){
+                $conn->desconectar();
                 die("Ha ocurrido un error al ejecutar la query");
             }
             $IDPermisos = $conn->getFila($resultado);

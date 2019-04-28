@@ -201,7 +201,7 @@
              
             //include("..\..\Codigo Fuente\src\Helpers\Conexion.php");
             /*
-            include("..\..\Helpers\Conexion.php");
+            
             $db = array(
             "user" => "root";
                 "pass" => "";
@@ -210,6 +210,7 @@
             */
             //$query = "INSERT INTO usuarios VALUES('$nickname','$pass')";
             //$conn = new Conexion( $db[user],$db[pass],$db[db];
+            include("..\..\Helpers\Conexion.php");
             $conn = new Conexion();
 
             //direccion

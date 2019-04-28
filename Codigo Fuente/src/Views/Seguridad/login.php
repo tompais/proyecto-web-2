@@ -56,7 +56,63 @@
                 <small>¿Olvidaste tu contraseña? <a href="forgotPassword.php">Click aquí</a></small>
                 <small>¿Primera vez aquí? <a href="registrar.php">Regístrate</a></small>
             </div>
+            <?php
+                session_start();
+                $regex = array(
+                "usuario" => "/^[0-9a-zA-Z]+$/",
+                "email" => "/^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/",
+                );
+                //include("..\..\Codigo Fuente\src\Helpers\Conexion.php");
+                include("..\..\Helpers\Conexion.php");
+                /*
+                $db = array(
+                    "user" => "root",
+                    "pass" => "",
+                    "db" => "pw2",
+                );
+                */
+                $query = "SELECT Username, UPassword, Email FROM usuario  where ";
+            
+                if ($_POST != null && count($_POST) != 0){
+                    if ( !preg_match($regex["usuario"], $_POST["inputEmailOrNick"]) or !preg_match($regex["email"], $_POST["inputEmailOrNick"]) ) 
+                        //{
+                        //usuario incorrecto
+                        die("Login incorrecto");
+                        //}
+                    $usuario = strtolower($_POST["inputEmailOrNick"] );
+                    $password = strtoupper( sha1($_POST["inputPassword"]) );
+                    
+                } else {
+                    //usuario incorrecto
+                    die("Login incorrecto");
+                }
+               
+                //$conn = new Conexion( $db[user],$db[pass],$db[db];
+                $conn = new Conexion();
+                if( preg_match($regex["usuario"],$usuario) ) {
+                    $query .= "idUsuario like '$usuario'";
+                } else {
+                    $query .= "email like '$usuario'":
+                }
 
+                Sresultado = $conn=>ejecutarQuery($query);
+
+                if(!Sresultado){
+                    die("Ha ocurrido un error al ejecutar la query");
+                }
+                $fila = $conn->getFila(Sresultado);
+                //si el usuario ingresado es igual al usuario(db) o el mail ingresado es igual al mail(db)
+                if( ($usuario == $fila[0] or $usuario == $fila[3]) && $pass == $fila[1]) {
+                
+                header("location: main.php");
+                exit();
+                }
+                else {
+                die("Login incorrecto");
+                }
+                $conn->desconectar();
+                */
+            ?>
         </form>
     </div>
     <script src="..\..\wwwroot\lib\jquery\jquery-3.4.0.min.js"></script>

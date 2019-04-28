@@ -6,7 +6,7 @@
         private $host;
         private $db;
         private $conec;
-
+        /*
         public function __construct($user, $pass, $db)
         {
             $this->user = $user;
@@ -15,7 +15,17 @@
             $this->db = $db;
             $this->conectar();
         }
-
+        */
+        public function __construct()
+        {
+            $this->user = "root";
+            $this->pass = "";
+            $this->host = "127.0.0.1";
+            $this->db = "pw";
+            $this->conectar();
+        }
+        
+        
         private function conectar()
         {
             $this->conec = new mysqli($this->host, $this->user, $this->pass, $this->db);

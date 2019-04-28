@@ -137,6 +137,84 @@
             <div class="d-flex justify-content-center align-items-center my-3">
                 <button type="submit" name="btnRegistrar" id="btnRegistrar" class="btn btn-primary">Registrar</button>
             </div>
+            <?php
+                $gerex = new array(
+                    exprEmail => "/^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/",
+                    exprLet => "/^[a-zA-Z]+$/",
+                    exprLetAndNum => "/^[0-9a-zA-Z]+$/",
+                    exprNum => "/^[0-9]+$/",
+                    exprLetAndSpace =>"/^[a-zA-Z]+(\s*[a-zA-Z]*)*[a-zA-Z]+$/",
+                );
+                
+             if ($_POST != null && count($_POST) != 0){
+                 
+                $nombre = $_POST["inputNombre"];
+                $apellido = $_POST["inputApellido"];
+                $nickname = $_POST["inputNickname"];
+                $pass = $_POST["inputPassword"];
+                $rePass = $_POST["inputRePassword"];
+                $email = $_POST["inputEmail"];
+                $fecha = $_POST["inputFechaNacimiento"];
+                $prov = $_POST["inputProvincia"];
+                $localidad = $_POST["inputLocalidad"];
+                $calle = $_POST["inputCalle"];
+                $altura = $_POST["inputAltura"];
+             } else {
+                 die("no deberias estar aqui");
+             }
+            
+            if( strlen($nombre) > 15 or strlen($nombre) < 3 or !preg_match($regex["exprLet"], $nombre){
+                die("Nombre incorrecto");
+            }
+            if( strlen($apellido) > 15 or strlen($apellido) < 3 or !preg_match($regex["exprLet"], $apellido){
+                die("Apellido incorrecto");
+            }
+            if( strlen($nickname) > 15 or strlen($nickname) < 3 or !preg_match($regex["exprLet"], $nickname){
+                die("Nickname incorrecto");
+            }
+            if( strlen($pass) > 15 or strlen($pass) < 6  or !preg_match($regex["exprLetAndNum"], $pass){
+                die("Contraseña incorrecta");
+            }
+            if( strlen($rePass) < 6  or $rePass != $Pass){
+                die("Confirmar contraseña incorrecta");
+            }
+            // @.com = 5caracteres
+            if( strlen($email) < 5  or !preg_match($regex["exprEmail"], $email){
+                die("Email incorrecto");
+            }
+               
+             if( strlen($prov) < 3  or !preg_match($regex["exprLet"], $prov){
+                die("Provincia incorrecta");
+            }  
+             if( strlen($localidad) < 3  or !preg_match($regex["exprLetAndSpace"], $localidad){
+                die("Localidad incorrecta");
+            }  
+             if( strlen($calle) < 3  or !preg_match($regex["exprLetAndSpace"], $calle){
+                die("Calle incorrecta");
+            }  
+            if( !preg_match($regex["exprNum"], $altura){
+                die("Altura incorrecta")
+                
+            /*  
+            //include("..\..\Codigo Fuente\src\Helpers\Conexion.php");
+                include("..\..\Helpers\Conexion.php");
+            $db = array(
+            "user" => "root";
+                "pass" => "";
+                "db" => "pw2";
+            );
+            $query = "INSERT INTO usuarios VALUES("'$nickname','$pass')";
+            $conn = new Conexion( $db[user],$db[pass],$db[db];
+
+            $conn->conectar();
+            
+            Sresultado = $conn=>ejecutarQuery($query);
+            if(!Sresultado){
+                die("Ha ocurrido un error al ejecutar la query");
+            }
+            $conn->desconectar();
+            */
+            ?>
 
         </form>
     </div>

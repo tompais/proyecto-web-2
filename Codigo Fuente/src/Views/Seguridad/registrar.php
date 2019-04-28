@@ -223,7 +223,7 @@
 
             $query = "SELECT ID FROM Direccion WHERE Calle like '$calle'";
             
-            Sresultado = $conn->ejecutarQuery($query);
+            $resultado = $conn->ejecutarQuery($query);
             if(!$resultado){
                 $conn->desconectar();
                 die("Ha ocurrido un error al ejecutar la query");

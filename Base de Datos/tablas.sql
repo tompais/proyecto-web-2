@@ -25,12 +25,12 @@ CREATE TABLE Usuario(
     Nombre varchar(30) NOT NULL,
     Apellido varchar(30) NOT NULL,
     FechaNac date NOT NULL,
-    Username varchar(30) NOT NULL,
+    Username varchar(30) UNIQUE NOT NULL,
     UPassword varchar(100) NOT NULL,
-    Telefono integer,
+    Telefono integer UNIQUE,
     ID_Direccion integer,
     ID_Provincia integer,
-    Email varchar(30) NOT NULL,
+    Email varchar(30) UNIQUE NOT NULL,
     constraint PK_Usuario_ID primary key (ID),
     constraint FK_Usuario_Direccion foreign key (ID_Direccion) references Direccion (ID),
     constraint FK_Usuario_Provincia foreign key (ID_Provincia) references Provincia (ID)
@@ -38,7 +38,7 @@ CREATE TABLE Usuario(
 
 CREATE TABLE Permiso(
     ID integer NOT NULL AUTO_INCREMENT,
-    Nombre_Permiso varchar(30) NOT NULL,
+    Nombre varchar(30) UNIQUE NOT NULL,
     constraint PK_Permiso_ID primary key (ID)
 );
 
@@ -46,6 +46,6 @@ CREATE TABLE PermisoUsuario(
     ID_Permiso integer NOT NULL,
     ID_Usuario integer NOT NULL,
     primary key (ID_Permiso, ID_Usuario),
-    constraint FK_PermisoUsuario_ID_Permiso foreign key (ID_Permiso) references Permiso (ID),
-    constraint FK_PermisoUsuario_ID_Usuario foreign key (ID_Usuario) references Usuario (ID)
+    constraint FK_PermisoUsuario_Permiso foreign key (ID_Permiso) references Permiso (ID),
+    constraint FK_PermisoUsuario_Usuario foreign key (ID_Usuario) references Usuario (ID)
 );

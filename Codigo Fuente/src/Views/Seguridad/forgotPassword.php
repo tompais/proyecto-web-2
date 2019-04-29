@@ -51,7 +51,8 @@
                     
         
             //include("..\..\Codigo Fuente\src\Helpers\Conexion.php");
-            include("..\..\Helpers\Conexion.php");
+           require_once("..\..\Helpers\Constantes.php");
+           require_once("..\..\Helpers\Conexion.php");
         /*
             $db = array(
             "user" => "root";
@@ -65,10 +66,10 @@
             if( preg_match($regex["usuario"],$usuario) ) {
                     $query .= "idUsuario like '$usuario'";
                 } else {
-                    $query .= "email like '$usuario'":
+                    $query .= "email like '$usuario'";
                 }
             
-            Sresultado = $conn=>ejecutarQuery($query);
+            $resultado = $conn ->ejecutarQuery($query);
 
             if(!Sresultado){
                 die("Ha ocurrido un error al ejecutar la query");
@@ -77,7 +78,7 @@
             
     
             $conn->desconectar();
-            */        
+
         ?>
         
     </div>

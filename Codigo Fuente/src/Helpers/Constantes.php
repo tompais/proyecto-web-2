@@ -28,6 +28,12 @@ abstract class Constantes
     const REGEXSOLOLETRAS = "/^[a-zA-Z]+$/";
     const REGEXLETRASYESPACIO = "/^[a-zA-Z]+(\s*[a-zA-Z]*)*[a-zA-Z]+$/";
     const REGEXSOLONUMEROS = "/^[0-9]+$/";
+
+    //Páginas
+    const REGISTRARPAGE = "registrar.php";
+
+    //Otros
+    const FROMPAGE = "fromPage";
 }
 
 

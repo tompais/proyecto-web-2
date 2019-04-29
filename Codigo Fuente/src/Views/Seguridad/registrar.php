@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Proyecto Web 2 - Registrar</title>
+    <title>Registrar</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="..\..\wwwroot\lib\bootstrap\css\bootstrap.min.css">
@@ -24,6 +24,118 @@
     <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <?php
+            require_once("..\..\Helpers\Constantes.php");
+            require_once("..\..\Helpers\Conexion.php");
+
+            if ($_POST && count($_POST) && isset($_POST[Constantes::BTNREGISTRAR])) {
+
+                session_start();
+
+                $nombre = isset($_POST[Constantes::INPUTNOMBRE]) ? $_POST[Constantes::INPUTNOMBRE] : null;
+                $apellido = isset($_POST[Constantes::INPUTAPELLIDO]) ? $_POST[Constantes::INPUTAPELLIDO] : null;
+                $nickname = isset($_POST[Constantes::INPUTNICKNAME]) ? $_POST[Constantes::INPUTNICKNAME] : null;
+                $pass = isset($_POST[Constantes::INPUTPASSWORD]) ? $_POST[Constantes::INPUTPASSWORD] : null;
+                $rePass = isset($_POST[Constantes::INPUTREPASSWORD]) ? $_POST[Constantes::INPUTREPASSWORD] : null;
+                $email = isset($_POST[Constantes::INPUTEMAIL]) ? $_POST[Constantes::INPUTEMAIL] : null;
+                $fecha = isset($_POST[Constantes::INPUTFECHANACIMIENTO]) ? $_POST[Constantes::INPUTFECHANACIMIENTO] : null;
+                // $prov = isset($_POST[Constantes::INPUTPROVINCIA]) ? $_POST[Constantes::INPUTPROVINCIA] : null;
+                // $localidad = isset($_POST[Constantes::INPUTLOCALIDAD]) ? $_POST[Constantes::INPUTLOCALIDAD] : null;
+                // $calle = isset($_POST[Constantes::INPUTCALLE]) ? $_POST[Constantes::INPUTCALLE] : null;
+                // $altura = isset($_POST[Constantes::INPUTALTURA]) ? $_POST[Constantes::INPUTALTURA] : null;
+                // $dto = isset($_POST[Constantes::INPUTDEPTO]) ? $_POST[Constantes::INPUTDEPTO] : null;
+                // $piso = isset($_POST[Constantes::INPUTPISO]) ? $_POST[Constantes::INPUTPISO] : null;
+
+                if (!$nombre || ($cantLetras = strlen($nombre)) > 15 || $cantLetras < 3 || !preg_match(Constantes::REGEXSOLOLETRAS, $nombre))
+                    echo "<script>alert('Nombre incorrecto')</script>";
+
+                if (!$apellido || ($cantLetras = strlen($apellido)) > 15 || $cantLetras < 3 || !preg_match(Constantes::REGEXSOLOLETRAS, $apellido))
+                    echo "<script>alert('Apellido incorrecto')</script>";
+
+                if (!$nickname || ($cantLetras = strlen($nickname)) > 15 || $cantLetras < 3 || !preg_match(Constantes::REGEXSOLOLETRAS, $nickname))
+                    echo "<script>alert('Nickname incorrecto')</script>";
+
+                if (!$pass || ($cantLetras = strlen($pass)) > 15 || $cantLetras < 6  || !preg_match(Constantes::REGEXLETRASYNUMEROS, $pass))
+                    echo "<script>alert('Contraseña incorrecta')</script>";
+
+                if (!$rePass || strcmp($rePass, $pass))
+                    echo "<script>alert('Confirmar contraseña incorrecta')</script>";
+
+                $pass = strtoupper(sha1($pass));
+
+                if (!$email || !preg_match(Constantes::REGEXEMAIL, $email))
+                    echo "<script>alert('Email incorrecto')</script>";
+
+                // if(!$prov || $cantLetras = strlen($prov) < 3 || $cantLetras > 20 || !preg_match(Constantes::REGEXLETRASYESPACIO, $prov))
+                //     die("Provincia incorrecta");
+
+                // if(!$localidad || $cantLetras = strlen($localidad) < 3 || $cantLetras > 20 || !preg_match(Constantes::REGEXLETRASYESPACIO, $localidad))
+                //     die("Localidad incorrecta");
+
+                // if(!$calle || $cantLetras = strlen($calle) < 3 || $cantLetras > 20  || !preg_match(Constantes::REGEXLETRASYESPACIO, $calle))
+                //     die("Calle incorrecta");
+
+                // if(!$altura || $cantLetras = strlen($altura) > 6 || $cantLetras < 1 || !preg_match(Constantes::REGEXSOLONUMEROS, $altura))
+                //     die("Altura incorrecta");
+
+                // if((!$piso && $depto) || ($piso && !$depto) || $cantLetras = strlen($piso) > 3 || $cantLetras < 1 || $cantLetras = strlen($depto) > 2 ||  $cantLetras < 1 || !preg_match(Constantes::REGEXSOLONUMEROS, $piso) || !preg_match(Constantes::REGEXLETRASYNUMEROS, $depto))
+                //     die("Piso y departamento incorrecto");
+                $conn = new Conexion();
+
+                // //direccion
+                // $query = "INSERT INTO Direccion (Calle, Altura, Departamento, Piso) VALUES ('$calle', '$altura'";
+                // $query .= $depto != null && $piso != null ? ", '$depto', '$piso'" : "";
+                // $query .= ")";
+                // $resultado = $conn->ejecutarQuery($query);
+                // if (!$conn->getCantFilasAfectadas() || !$resultado)
+                //     die("Ha ocurrido un error al ejecutar la query");
+
+                // $query = "SELECT ID FROM Direccion WHERE Calle LIKE '$calle'";
+                // $resultado = $conn->ejecutarQuery($query);
+                // if (!$resultado)
+                //     die("Ha ocurrido un error al ejecutar la query");
+                // $direccion = $conn->getFila(Sresultado);
+
+                // $query = "SELECT ID FROM Provincia WHERE Nombre LIKE '$prov'";
+                // $resultado = $conn->ejecutarQuery($query);
+                // if(!$resultado)
+                //     die("Ha ocurrido un error al ejecutar la query");
+                // $prov = $conn->getFila($resultado);
+
+                //usuario
+                $query = "INSERT INTO Usuario (Nombre, Apellido, FechaNac, Username, UPassword, Email) VALUES ('$nombre', '$apellido', STR_TO_DATE('$fecha', '%d/%m/%Y'), '$nickname', '$pass', '$email')";
+                $resultado = $conn->ejecutarQuery($query);
+                if (!$resultado || !$conn->getCantFilasAfectadas()) {
+                    header("location: ../NoCompletado/noCompletado.php");
+                    $conn->desconectar();
+                    exit();
+                }
+
+                $query = "SELECT ID FROM Usuario WHERE Username LIKE '$nickname'";
+                $resultado = $conn->ejecutarQuery($query);
+                if (!$resultado || !$conn->getCantFilasAfectadas()) {
+                    header("location: ../NoCompletado/noCompletado.php");
+                    $conn->desconectar();
+                    exit();
+                }
+
+                $_SESSION[Constantes::FROMPAGE] = basename($_SERVER['PHP_SELF']);
+
+                header("location: login.php");
+
+                // //seteo los permisos del usuario
+                // //traigo el permiso de usuario normal
+                // $query = "SELECT ID FROM Permiso WHERE Nombre_Permiso like 'normal'";
+                // $resultado = $conn->ejecutarQuery($query);
+                // if (!$resultado)
+                //     die("Ha ocurrido un error al ejecutar la query");
+                // $IDPermisos = $conn->getFila($resultado);
+
+                // $query = "INSERT INTO PermisoUsuario (ID_Permiso, ID_Usuario) VALUES  ('$IDPermisos' ,'$IDUsuario')";
+
+                $conn->desconectar();
+            }
+            ?>
     <div class="container-fluid">
         <form action="registrar.php" method="post" class="border shadow rounded mx-auto w-25 p-4 mt-5 pre-scrollable">
             <h4 class="mb-4 text-center">Regístrese</h4>
@@ -139,112 +251,6 @@
             <div class="d-flex justify-content-center align-items-center my-3">
                 <button type="submit" name="btnRegistrar" id="btnRegistrar" class="btn btn-primary">Registrar</button>
             </div>
-            <?php
-            require_once("..\..\Helpers\Constantes.php");
-            require_once("..\..\Helpers\Conexion.php");
-
-            if ($_POST && count($_POST) && isset($_POST[Constantes::BTNREGISTRAR])) {
-
-                $nombre = isset($_POST[Constantes::INPUTNOMBRE]) ? $_POST[Constantes::INPUTNOMBRE] : null;
-                $apellido = isset($_POST[Constantes::INPUTAPELLIDO]) ? $_POST[Constantes::INPUTAPELLIDO] : null;
-                $nickname = isset($_POST[Constantes::INPUTNICKNAME]) ? $_POST[Constantes::INPUTNICKNAME] : null;
-                $pass = isset($_POST[Constantes::INPUTPASSWORD]) ? $_POST[Constantes::INPUTPASSWORD] : null;
-                $rePass = isset($_POST[Constantes::INPUTREPASSWORD]) ? $_POST[Constantes::INPUTREPASSWORD] : null;
-                $email = isset($_POST[Constantes::INPUTEMAIL]) ? $_POST[Constantes::INPUTEMAIL] : null;
-                $fecha = isset($_POST[Constantes::INPUTFECHANACIMIENTO]) ? $_POST[Constantes::INPUTFECHANACIMIENTO] : null;
-                // $prov = isset($_POST[Constantes::INPUTPROVINCIA]) ? $_POST[Constantes::INPUTPROVINCIA] : null;
-                // $localidad = isset($_POST[Constantes::INPUTLOCALIDAD]) ? $_POST[Constantes::INPUTLOCALIDAD] : null;
-                // $calle = isset($_POST[Constantes::INPUTCALLE]) ? $_POST[Constantes::INPUTCALLE] : null;
-                // $altura = isset($_POST[Constantes::INPUTALTURA]) ? $_POST[Constantes::INPUTALTURA] : null;
-                // $dto = isset($_POST[Constantes::INPUTDEPTO]) ? $_POST[Constantes::INPUTDEPTO] : null;
-                // $piso = isset($_POST[Constantes::INPUTPISO]) ? $_POST[Constantes::INPUTPISO] : null;
-
-                if (!$nombre || ($cantLetras = strlen($nombre)) > 15 || $cantLetras < 3 || !preg_match(Constantes::REGEXSOLOLETRAS, $nombre))
-                    die("Nombre incorrecto");
-
-                if (!$apellido || ($cantLetras = strlen($apellido)) > 15 || $cantLetras < 3 || !preg_match(Constantes::REGEXSOLOLETRAS, $apellido))
-                    die("Apellido incorrecto");
-
-                if (!$nickname || ($cantLetras = strlen($nickname)) > 15 || $cantLetras < 3 || !preg_match(Constantes::REGEXSOLOLETRAS, $nickname))
-                    die("Nickname incorrecto");
-
-                if (!$pass || ($cantLetras = strlen($pass)) > 15 || $cantLetras < 6  || !preg_match(Constantes::REGEXLETRASYNUMEROS, $pass))
-                    die("Contraseña incorrecta");
-
-                if (!$rePass || strcmp($rePass, $pass))
-                    die("Confirmar contraseña incorrecta");
-
-                $pass = strtoupper(sha1($pass));
-
-                if (!$email || !preg_match(Constantes::REGEXEMAIL, $email))
-                    die("Email incorrecto");
-
-                // if(!$prov || $cantLetras = strlen($prov) < 3 || $cantLetras > 20 || !preg_match(Constantes::REGEXLETRASYESPACIO, $prov))
-                //     die("Provincia incorrecta");
-
-                // if(!$localidad || $cantLetras = strlen($localidad) < 3 || $cantLetras > 20 || !preg_match(Constantes::REGEXLETRASYESPACIO, $localidad))
-                //     die("Localidad incorrecta");
-
-                // if(!$calle || $cantLetras = strlen($calle) < 3 || $cantLetras > 20  || !preg_match(Constantes::REGEXLETRASYESPACIO, $calle))
-                //     die("Calle incorrecta");
-
-                // if(!$altura || $cantLetras = strlen($altura) > 6 || $cantLetras < 1 || !preg_match(Constantes::REGEXSOLONUMEROS, $altura))
-                //     die("Altura incorrecta");
-
-                // if((!$piso && $depto) || ($piso && !$depto) || $cantLetras = strlen($piso) > 3 || $cantLetras < 1 || $cantLetras = strlen($depto) > 2 ||  $cantLetras < 1 || !preg_match(Constantes::REGEXSOLONUMEROS, $piso) || !preg_match(Constantes::REGEXLETRASYNUMEROS, $depto))
-                //     die("Piso y departamento incorrecto");
-
-                $conn = new Conexion();
-
-                // //direccion
-                // $query = "INSERT INTO Direccion (Calle, Altura, Departamento, Piso) VALUES ('$calle', '$altura'";
-                // $query .= $depto != null && $piso != null ? ", '$depto', '$piso'" : "";
-                // $query .= ")";
-                // $resultado = $conn->ejecutarQuery($query);
-                // if (!$conn->getCantFilasAfectadas() || !$resultado)
-                //     die("Ha ocurrido un error al ejecutar la query");
-
-                // $query = "SELECT ID FROM Direccion WHERE Calle LIKE '$calle'";
-                // $resultado = $conn->ejecutarQuery($query);
-                // if (!$resultado)
-                //     die("Ha ocurrido un error al ejecutar la query");
-                // $direccion = $conn->getFila(Sresultado);
-
-                // $query = "SELECT ID FROM Provincia WHERE Nombre LIKE '$prov'";
-                // $resultado = $conn->ejecutarQuery($query);
-                // if(!$resultado)
-                //     die("Ha ocurrido un error al ejecutar la query");
-                // $prov = $conn->getFila($resultado);
-
-                //usuario
-                $query = "INSERT INTO Usuario (Nombre, Apellido, FechaNac, Username, UPassword, Email) VALUES ('$nombre', '$apellido', STR_TO_DATE('$fecha', '%d/%m/%Y'), '$nickname', '$pass', '$email')";
-                $resultado = $conn->ejecutarQuery($query);
-                if (!$resultado || !$conn->getCantFilasAfectadas())
-                    die("Ha ocurrido un error al crear al usuario");
-
-                $query = "SELECT ID FROM Usuario WHERE Username LIKE '$nickname'";
-                $resultado = $conn->ejecutarQuery($query);
-                if (!$resultado || !$conn->getCantFilasAfectadas())
-                    die("Ha ocurrido un error al consultar el usuario registrado");
-
-                $IDUsuario = $conn->getFila($resultado)[0];
-
-                // //seteo los permisos del usuario
-                // //traigo el permiso de usuario normal
-                // $query = "SELECT ID FROM Permiso WHERE Nombre_Permiso like 'normal'";
-                // $resultado = $conn->ejecutarQuery($query);
-                // if (!$resultado)
-                //     die("Ha ocurrido un error al ejecutar la query");
-                // $IDPermisos = $conn->getFila($resultado);
-
-                // $query = "INSERT INTO PermisoUsuario (ID_Permiso, ID_Usuario) VALUES  ('$IDPermisos' ,'$IDUsuario')";
-
-                $conn->desconectar();
-            }
-
-
-            ?>
-
         </form>
     </div>
     <script src="..\..\wwwroot\lib\jquery\jquery-3.4.0.min.js"></script>

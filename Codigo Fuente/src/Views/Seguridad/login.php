@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Proyecto Web 2 - Login</title>
+    <title>Login</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="..\..\wwwroot\lib\bootstrap\css\bootstrap.min.css">
@@ -23,14 +23,21 @@
     <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <?php
+        require_once("..\..\Helpers\Constantes.php");
+
+        session_start();
+        if(isset($_SESSION[Constantes::FROMPAGE]) && !strcmp($_SESSION[Constantes::FROMPAGE], Constantes::REGISTRARPAGE))
+            echo "<script>alert('La registración fue todo un éxito')</script>";
+        ?>
     <div class="container-fluid">
         <form action="login.php" method="post" class="border rounded shadow w-25 mx-auto p-4 mt-5">
             <h4 class="mb-4 text-center">Login de Usuario</h4>
 
             <div class="form-group">
                 <label for="inputEmailOrNick">Nickname/Email</label>
-                <input type="text" name="inputEmailOrNick" id="inputEmailOrNick" class="form-control" >
-                <div id="errorNick" class="error"> <i class="fas fa-exclamation-triangle"></i > Ingrese su nombre de usuario o Email</div>
+                <input type="text" name="inputEmailOrNick" id="inputEmailOrNick" class="form-control">
+                <div id="errorNick" class="error"> <i class="fas fa-exclamation-triangle"></i> Ingrese su nombre de usuario o Email</div>
                 <div id="errorNick2" class="error"> <i class="fas fa-exclamation-triangle"></i> Escriba su nick o email de forma correcta</div>
             </div>
 
@@ -57,38 +64,33 @@
                 <small>¿Primera vez aquí? <a href="registrar.php">Regístrate</a></small>
             </div>
             <?php
-                session_start();
-                $regex = array(
-                "usuario" => "/^[0-9a-zA-Z]+$/",
-                "email" => "/^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/",
-                );
-                //include("..\..\Codigo Fuente\src\Helpers\Conexion.php");
-                include("..\..\Helpers\Conexion.php");
-                /*
-                $db = array(
-                    "user" => "root",
-                    "pass" => "",
-                    "db" => "pw2",
-                );
-                */
-                $query = "SELECT Username, UPassword, Email FROM usuario  where ";
-            
-                if ($_POST != null && count($_POST) != 0){
-                    if ( !preg_match($regex["usuario"], $_POST["inputEmailOrNick"]) or !preg_match($regex["email"], $_POST["inputEmailOrNick"]) ) 
-                        //{
-                        //usuario incorrecto
-                        die("Login incorrecto");
-                        //}
-                    $usuario = strtolower($_POST["inputEmailOrNick"] );
-                    $password = strtoupper( sha1($_POST["inputPassword"]) );
-                    
-                } else {
-                    //usuario incorrecto
-                    die("Login incorrecto");
+            require_once("..\..\Helpers\Conexion.php");
+            require_once("..\..\Helpers\Constantes.php");
+
+            if ($_POST && count($_POST) && isset($_POST[Constantes::BTNINGRESAR])) {
+                $usuario = isset($_POST[Constantes::INPUTEMAILORNICK]) ? strtolower($_POST[Constantes::INPUTEMAILORNICK]) : null;
+                $password = isset($_POST[Constantes::INPUTPASSWORD]) ? $_POST[Constantes::INPUTPASSWORD] : null;
+                $query = "SELECT Username, UPassword, Email FROM Usuario  where ";
+                if (
+                    $usuario == null
+                    || (!($resultRegexNick = preg_match(Constantes::REGEXLETRASYNUMEROS, $usuario))
+                        && !($resultRegexEmail = preg_match(Constantes::REGEXEMAIL, $usuario)))
+                    || $password == null || !preg_match(Constantes::REGEXLETRASYNUMEROS, $password)
+                ) {
+                    header("location: ../NoCompletado/noCompletado.php");
+                    exit();
                 }
-               
-                //$conn = new Conexion( $db[user],$db[pass],$db[db];
+                else if ($resultRegexNick)
+                    $query .= "Username like '$usuario'";
+                else
+                    $query .= "Email like '$usuario'";
+
+                $password = strtoupper(sha1($password));
+
+                $query .= " AND UPassword LIKE '$password'";
+
                 $conn = new Conexion();
+<<<<<<< HEAD
                 if( preg_match($regex["usuario"],$usuario) ) {
                     $query .= "idUsuario like '$usuario'";
                 } else {
@@ -96,12 +98,13 @@
                 }
 
                 Sresultado = $conn->ejecutarQuery($query);
+=======
 
-                if(!Sresultado){
-                    die("Ha ocurrido un error al ejecutar la query");
-                }
-                $fila = $conn->getFila(Sresultado);
+                $resultado = $conn->ejecutarQuery($query);
+>>>>>>> e7265f7d72cd419ba8f95de463706f8a6541f5f6
+
                 //si el usuario ingresado es igual al usuario(db) o el mail ingresado es igual al mail(db)
+<<<<<<< HEAD
                 if( ($usuario == $fila[0] or $usuario == $fila[3]) && $password == $fila[1]) {
                 
                 header("location: main.php");
@@ -112,6 +115,15 @@
                 }
                 $conn->desconectar();
 
+=======
+                if ($resultado && $conn->getCantFilasAfectadas() && ($fila = $conn->getFila($resultado)) && ($usuario == $fila[0] or $usuario == $fila[2]) && $password == $fila[1])
+                    header("location: ../Home/main.php");
+                else
+                    echo "<script>alert('Usuario y/o Contraseña inválido')</script>";
+
+                $conn->desconectar();
+            }
+>>>>>>> e7265f7d72cd419ba8f95de463706f8a6541f5f6
             ?>
         </form>
     </div>

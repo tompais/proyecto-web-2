@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Proyecto Web 2 - Login</title>
+    <title>Login</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="..\..\wwwroot\lib\bootstrap\css\bootstrap.min.css">
@@ -23,6 +23,13 @@
     <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <?php
+        require_once("..\..\Helpers\Constantes.php");
+
+        session_start();
+        if(isset($_SESSION[Constantes::FROMPAGE]) && !strcmp($_SESSION[Constantes::FROMPAGE], Constantes::REGISTRARPAGE))
+            echo "<script>alert('La registración fue todo un éxito')</script>";
+        ?>
     <div class="container-fluid">
         <form action="login.php" method="post" class="border rounded shadow w-25 mx-auto p-4 mt-5">
             <h4 class="mb-4 text-center">Login de Usuario</h4>
@@ -69,8 +76,10 @@
                     || (!($resultRegexNick = preg_match(Constantes::REGEXLETRASYNUMEROS, $usuario))
                         && !($resultRegexEmail = preg_match(Constantes::REGEXEMAIL, $usuario)))
                     || $password == null || !preg_match(Constantes::REGEXLETRASYNUMEROS, $password)
-                )
-                    die("Formato de login inválido");
+                ) {
+                    header("location: ../NoCompletado/noCompletado.php");
+                    exit();
+                }
                 else if ($resultRegexNick)
                     $query .= "Username like '$usuario'";
                 else
@@ -88,7 +97,7 @@
                 if ($resultado && $conn->getCantFilasAfectadas() && ($fila = $conn->getFila($resultado)) && ($usuario == $fila[0] or $usuario == $fila[2]) && $password == $fila[1])
                     header("location: ../Home/main.php");
                 else
-                    echo "Usuario y/o Contraseña inválido";
+                    echo "<script>alert('Usuario y/o Contraseña inválido')</script>";
 
                 $conn->desconectar();
             }

@@ -44,19 +44,31 @@ if ($_POST && count($_POST) && isset($_POST[Constantes::BTNREGISTRAR])) {
     // $dto = isset($_POST[Constantes::INPUTDEPTO]) ? $_POST[Constantes::INPUTDEPTO] : null;
     // $piso = isset($_POST[Constantes::INPUTPISO]) ? $_POST[Constantes::INPUTPISO] : null;
 
-    if (!$nombre || ($cantLetras = strlen($nombre)) > 15 || $cantLetras < 3 || !preg_match(Constantes::REGEXSOLOLETRAS, $nombre))
+    if (!$nombre || ($cantLetras = strlen($nombre)) > 15 || $cantLetras < 3 || !preg_match(Constantes::REGEXLETRASYESPACIO, $nombre)) {
         echo "<script>alert('Nombre incorrecto')</script>";
-    if (!$apellido || ($cantLetras = strlen($apellido)) > 15 || $cantLetras < 3 || !preg_match(Constantes::REGEXSOLOLETRAS, $apellido))
+        exit();
+    }
+    if (!$apellido || ($cantLetras = strlen($apellido)) > 15 || $cantLetras < 3 || !preg_match(Constantes::REGEXLETRASYESPACIO, $apellido)) {
         echo "<script>alert('Apellido incorrecto')</script>";
-    if (!$nickname || ($cantLetras = strlen($nickname)) > 15 || $cantLetras < 3 || !preg_match(Constantes::REGEXSOLOLETRAS, $nickname))
+        exit();
+    }
+    if (!$nickname || ($cantLetras = strlen($nickname)) > 15 || $cantLetras < 3 || !preg_match(Constantes::REGEXSOLOLETRAS, $nickname)) {
         echo "<script>alert('Nickname incorrecto')</script>";
-    if (!$pass || ($cantLetras = strlen($pass)) > 15 || $cantLetras < 6  || !preg_match(Constantes::REGEXLETRASYNUMEROS, $pass))
+        exit();
+    }
+    if (!$pass || ($cantLetras = strlen($pass)) > 15 || $cantLetras < 6  || !preg_match(Constantes::REGEXLETRASYNUMEROS, $pass)) {
         echo "<script>alert('Contraseña incorrecta')</script>";
-    if (!$rePass || strcmp($rePass, $pass))
+        exit();
+    }
+    if (!$rePass || strcmp($rePass, $pass)) {
         echo "<script>alert('Confirmar contraseña incorrecta')</script>";
+        exit();
+    }
     $pass = strtoupper(sha1($pass));
-    if (!$email || !preg_match(Constantes::REGEXEMAIL, $email))
+    if (!$email || !preg_match(Constantes::REGEXEMAIL, $email)) {
         echo "<script>alert('Email incorrecto')</script>";
+        exit();
+    }
 
     // if(!$prov || $cantLetras = strlen($prov) < 3 || $cantLetras > 20 || !preg_match(Constantes::REGEXLETRASYESPACIO, $prov))
     //     die("Provincia incorrecta");

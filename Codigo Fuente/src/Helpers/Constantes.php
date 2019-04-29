@@ -21,6 +21,7 @@ abstract class Constantes
     //Botones
     const BTNINGRESAR = "btnIngresar";
     const BTNREGISTRAR = "btnRegistrar";
+    const BTNRECUPERARPASSWORD = "btnRecuperarPassword";
 
     //Regex
     const REGEXLETRASYNUMEROS = "/^[0-9a-zA-Z]+$/";

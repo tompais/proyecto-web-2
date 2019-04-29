@@ -68,20 +68,17 @@ if(isset($_SESSION[Constantes::FROMPAGE]) && !strcmp($_SESSION[Constantes::FROMP
         if ($_POST && count($_POST) && isset($_POST[Constantes::BTNINGRESAR])) {
             $usuario = isset($_POST[Constantes::INPUTEMAILORNICK]) ? strtolower($_POST[Constantes::INPUTEMAILORNICK]) : null;
             $password = isset($_POST[Constantes::INPUTPASSWORD]) ? $_POST[Constantes::INPUTPASSWORD] : null;
-            $query = "SELECT Username, UPassword, Email FROM Usuario  where ";
+            $query = "SELECT Username, UPassword, Email FROM Usuario  where Username LIKE '$usuario' OR Email LIKE '$usuario'";
             if (
                 $usuario == null
-                || (!($resultRegexNick = preg_match(Constantes::REGEXLETRASYNUMEROS, $usuario))
-                    && !($resultRegexEmail = preg_match(Constantes::REGEXEMAIL, $usuario)))
+                || (!preg_match(Constantes::REGEXLETRASYNUMEROS, $usuario)
+                    && !preg_match(Constantes::REGEXEMAIL, $usuario))
                 || $password == null || !preg_match(Constantes::REGEXLETRASYNUMEROS, $password)
             ) {
                 header("location: ../NoCompletado/noCompletado.php");
                 exit();
             }
-            else if ($resultRegexNick)
-                $query .= "Username like '$usuario'";
-            else
-                $query .= "Email like '$usuario'";
+
             $password = strtoupper(sha1($password));
             $query .= " AND UPassword LIKE '$password'";
             $conn = new Conexion();

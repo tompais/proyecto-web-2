@@ -193,7 +193,7 @@
                 die("Calle incorrecta");
             }  
             if( !preg_match($regex["exprNum"], $altura){
-                die("Altura incorrecta")
+                die("Altura incorrecta");
                 
             /*  
             //include("..\..\Codigo Fuente\src\Helpers\Conexion.php");

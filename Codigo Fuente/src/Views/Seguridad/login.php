@@ -92,17 +92,17 @@
                 if( preg_match($regex["usuario"],$usuario) ) {
                     $query .= "idUsuario like '$usuario'";
                 } else {
-                    $query .= "email like '$usuario'":
+                    $query .= "email like '$usuario'";
                 }
 
-                Sresultado = $conn=>ejecutarQuery($query);
+                Sresultado = $conn->ejecutarQuery($query);
 
                 if(!Sresultado){
                     die("Ha ocurrido un error al ejecutar la query");
                 }
                 $fila = $conn->getFila(Sresultado);
                 //si el usuario ingresado es igual al usuario(db) o el mail ingresado es igual al mail(db)
-                if( ($usuario == $fila[0] or $usuario == $fila[3]) && $pass == $fila[1]) {
+                if( ($usuario == $fila[0] or $usuario == $fila[3]) && $password == $fila[1]) {
                 
                 header("location: main.php");
                 exit();
@@ -111,7 +111,7 @@
                 die("Login incorrecto");
                 }
                 $conn->desconectar();
-                */
+
             ?>
         </form>
     </div>

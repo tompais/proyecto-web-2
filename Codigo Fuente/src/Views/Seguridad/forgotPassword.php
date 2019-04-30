@@ -39,7 +39,7 @@
         if ($_POST && count($_POST) && isset($_POST[Constantes::BTNRECUPERARPASSWORD])) {
             $usuario = isset($_POST[Constantes::BTNRECUPERARPASSWORD]) ? strtolower($_POST[Constantes::INPUTEMAILORNICK]) : null;
             if ($usuario == null || !strcmp($usuario, "") || !preg_match(Constantes::REGEXLETRASYNUMEROS, $_POST[Constantes::INPUTEMAILORNICK]) || !preg_match(Constantes::REGEXEMAIL, $_POST[Constantes::INPUTEMAILORNICK])) {
-                echo "<script>alert('Apellido incorrecto')</script>";
+                header("location: ../NoCompletado/noCompletado.php");
                 exit();
             }
 

@@ -32,9 +32,6 @@ abstract class Constantes
 
     //Páginas
     const REGISTRARPAGE = "registrar.php";
-
-    //Otros
-    const FROMPAGE = "fromPage";
 }
 
 

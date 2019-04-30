@@ -66,7 +66,7 @@ if(isset($_SESSION[Constantes::FROMPAGE]) && !strcmp($_SESSION[Constantes::FROMP
         require_once("..\..\Helpers\Conexion.php");
         require_once("..\..\Helpers\Constantes.php");
         if ($_POST && count($_POST) && isset($_POST[Constantes::BTNINGRESAR])) {
-            $usuario = isset($_POST[Constantes::INPUTEMAILORNICK]) ? strtolower($_POST[Constantes::INPUTEMAILORNICK]) : null;
+            $usuario = isset($_POST[Constantes::INPUTNOMBRE]) ? strtolower($_POST[Constantes::INPUTNOMBRE]) : null;
             $password = isset($_POST[Constantes::INPUTPASSWORD]) ? $_POST[Constantes::INPUTPASSWORD] : null;
             $query = "SELECT Username, UPassword, Email FROM Usuario  where ";
             if (

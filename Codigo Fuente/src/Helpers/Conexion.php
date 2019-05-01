@@ -91,7 +91,7 @@ class Conexion
      * @access public
      * @return mixed
      */
-    public function getFila($resultado)
+    public function getFilaQueryEjecutada($resultado)
     {
         return $resultado->fetch_row();
     }
@@ -175,6 +175,33 @@ class Conexion
     }
 
     /**
+     * Obtener array asociativo del prepared statement
+     * 
+     * Obtiene un array, cuyas claves son las columnas a filtrar
+     * y los datos corresponden a la consulta
+     * 
+     * @access public
+     * @return array
+     */
+    public function &getArrayAsociativoPreparedStatement()
+    {
+        // Obtengo metadata para los nombres de los campos
+        $meta = $this->stmt->result_metadata();
+
+        // Creo array dinámico de variables para usar en el bind result
+        while ($field = $meta->fetch_field()) {
+            $var = $field->name;
+            $$var = null;
+            $fields[$var] = &$$var;
+        }
+
+        // Realizo el bind result
+        call_user_func_array(array($this->stmt, 'bind_result'), $fields);
+
+        return $fields;
+    }
+
+    /**
      * Recuperar Resultado
      * 
      * Devuelve a los parámetros asociados del resultado lo que trajo el statement en la query
@@ -182,8 +209,20 @@ class Conexion
      * @access public
      * @return bool
      */
-    public function recuperarResultado()
+    public function recuperarResultadoPreparedStatement()
     {
         return $this->stmt->fetch();
+    }
+
+    /**
+     * Cerrar Prepared Statement
+     *
+     * Cierra el statement, borrándolo por completo
+     *
+     * @access public
+     */
+    public function cerrarPreparedStatement()
+    {
+        $this->stmt->close();
     }
 }

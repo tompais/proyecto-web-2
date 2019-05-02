@@ -78,9 +78,30 @@ class Conexion
      * @access public
      * @return int
      */
-    public function getCantFilasAfectadas()
+    public function getCantFilasAfectadasQuery()
     {
         return $this->mysql->affected_rows;
+    }
+
+
+    /**
+     * Obtener Cantidas de Filas Afectadas en un Statement que modificó la tabla
+     * 
+     * @access public
+     * @return int
+     */
+    public function getCantFilasAfectadasPreparedStatement() {
+        return $this->stmt->affected_rows;
+    }
+
+    /**
+     * Obtener Cantidad de Filas Seleccionadas en un Statement previamente ejecutado
+     * 
+     * @access public
+     * @return int
+     */
+    public function getCantFilasSeleccionadasPreparedStatement() {
+        return $this->stmt->num_rows;
     }
 
     /**
@@ -218,7 +239,7 @@ class Conexion
      * Cerrar Prepared Statement
      *
      * Cierra el statement, borrándolo por completo
-     *
+     * 
      * @access public
      */
     public function cerrarPreparedStatement()

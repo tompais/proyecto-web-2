@@ -25,8 +25,9 @@
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
     <?php
-    require_once("..\..\Helpers\Constantes.php");
-    require_once("..\..\Helpers\Conexion.php");
+    require_once "..\..\Helpers\Constantes.php";
+    require_once "..\..\Helpers\Conexion.php";
+
     if ($_POST && count($_POST) && isset($_POST[Constantes::BTNREGISTRAR])) {
         $nombre = isset($_POST[Constantes::INPUTNOMBRE]) ? $_POST[Constantes::INPUTNOMBRE] : null;
         $apellido = isset($_POST[Constantes::INPUTAPELLIDO]) ? $_POST[Constantes::INPUTAPELLIDO] : null;
@@ -85,7 +86,7 @@
     }
     ?>
     <div class="container-fluid">
-        <form action="registrar.php" method="post" class="border shadow rounded mx-auto w-50 p-4 mt-5">
+        <form action="registrar.php" method="post" class="border shadow rounded mx-auto w-50 p-4 my-5">
             <h4 class="mb-4 text-center">Regístrese</h4>
 
             <div class="form-row">
@@ -160,12 +161,23 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="inputFechaNacimiento">Fecha de Nacimiento</label>
-                <div class="input-group">
-                    <input type="text" name="inputFechaNacimiento" id="inputFechaNacimiento" class="form-control">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" id="btnInputFechaNacimiento" type="button"><i class="fas fa-calendar-alt"></i></button>
+            <div class="form-row">
+                <div class="col-lg">
+                    <div class="form-group">
+                      <label for="inputTelefono">Teléfono</label>
+                      <input type="number" class="form-control" name="inputTelefono" id="inputTelefono" aria-describedby="helpIdInputTelefono" placeholder="111234567">
+                      <small id="helpIdInputTelefono" class="form-text text-muted">Sin código de área</small>
+                    </div>
+                </div>
+                <div class="col-lg">
+                    <div class="form-group">
+                        <label for="inputFechaNacimiento">Fecha de Nacimiento</label>
+                        <div class="input-group">
+                            <input type="text" name="inputFechaNacimiento" id="inputFechaNacimiento" class="form-control">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" id="btnInputFechaNacimiento" type="button"><i class="fas fa-calendar-alt"></i></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

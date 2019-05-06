@@ -11,12 +11,7 @@ abstract class Constantes
     const INPUTREPASSWORD = "inputRePassword";
     const INPUTEMAIL = "inputEmail";
     const INPUTFECHANACIMIENTO = "inputFechaNacimiento";
-    const INPUTPROVINCIA = "inputProvincia";
-    const INPUTLOCALIDAD = "inputLocalidad";
-    const INPUTCALLE = "inputCalle";
-    const INPUTALTURA = "inputAltura";
-    const INPUTDEPTO = "inputDepto";
-    const INPUTPISO = "inputPiso";
+    const INPUTTELEFONO = "inputTelefono";
 
     //Botones
     const BTNINGRESAR = "btnIngresar";

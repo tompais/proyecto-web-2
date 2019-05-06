@@ -5,13 +5,26 @@ const nombresMeses = [
 const nombresDias = ["D", "L", "M", "M", "J", "V", "S"];
 
 var inputFechaNacimiento = $("#inputFechaNacimiento");
-var iconoInputFechaNacimiento = $("#iconoInputFechaNacimiento");
+var btnInputFechaNacimiento = $("#btnInputFechaNacimiento");
 
 inicializarDatePicker();
 
-iconoInputFechaNacimiento.click(function () {
+btnInputFechaNacimiento.click(function () {
     inputFechaNacimiento.data("daterangepicker").toggle();
 });
+
+function showPassword(btn) {
+    var pwd = $(btn).parent().siblings(".pwd");
+    var eye = $(btn).children();
+
+    if(pwd.attr("type") === "password") {
+        pwd.attr("type", "text");
+        eye.removeClass("fa-eye").addClass("fa-eye-slash");
+    } else {
+        pwd.attr("type", "password");
+        eye.removeClass("fa-eye-slash").addClass("fa-eye");
+    }
+}
 
 function inicializarDatePicker() {
 

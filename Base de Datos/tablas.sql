@@ -5,41 +5,42 @@ CREATE DATABASE pw;
 USE pw;
 
 CREATE TABLE Ubicacion(
-    ID integer NOT NULL AUTO_INCREMENT,
+    Id integer NOT NULL AUTO_INCREMENT,
     Longitud integer NOT NULL,
     Latitud integer NOT NULL,
-    constraint PK_Ubicacion_ID primary key (ID)
+    constraint PK_Ubicacion primary key (Id)
 );
 
 CREATE TABLE Usuario(
-    ID integer NOT NULL AUTO_INCREMENT,
+    Id integer NOT NULL AUTO_INCREMENT,
     Nombre varchar(30) NOT NULL,
     Apellido varchar(30) NOT NULL,
     FechaNac date NOT NULL,
     Username varchar(30) UNIQUE NOT NULL,
     UPassword varchar(100) NOT NULL,
     Telefono integer UNIQUE,
-    ID_Ubicacion integer,
+    UbicacionId integer,
     Email varchar(30) UNIQUE NOT NULL,
     FechaBaneo date,
     FechaBaja date,
     Estado varchar(1),
-    constraint PK_Usuario_ID primary key (ID),
-    constraint FK_Usuario_Ubicacion foreign key (ID_Ubicacion) references Ubicacion (ID)
+    constraint PK_Usuario primary key (Id),
+    constraint FK_Usuario_Ubicacion foreign key (UbicacionId) references Ubicacion (Id)
 );
 
 CREATE TABLE Permiso(
-    ID integer NOT NULL AUTO_INCREMENT,
+    Id integer NOT NULL AUTO_INCREMENT,
     Nombre varchar(30) UNIQUE NOT NULL,
-    constraint PK_Permiso_ID primary key (ID)
+    constraint PK_Permiso primary key (Id)
 );
 
 CREATE TABLE PermisoUsuario(
-    ID_Permiso integer NOT NULL,
-    ID_Usuario integer NOT NULL,
-    primary key (ID_Permiso, ID_Usuario),
-    constraint FK_PermisoUsuario_Permiso foreign key (ID_Permiso) references Permiso (ID),
-    constraint FK_PermisoUsuario_Usuario foreign key (ID_Usuario) references Usuario (ID)
+	Id integer auto_increment not null unique,
+    PermisoId integer NOT NULL,
+    UsuarioId integer NOT NULL,
+    constraint PK_PermisoUsuario primary key (PermisoId, UsuarioId),
+    constraint FK_PermisoUsuario_Permiso foreign key (PermisoId) references Permiso (Id),
+    constraint FK_PermisoUsuario_Usuario foreign key (UsuarioId) references Usuario (Id)
 );
 
 INSERT INTO Usuario (Nombre, Apellido, FechaNac, Username, UPassword, Email, Estado)
@@ -49,4 +50,4 @@ INSERT INTO Permiso (Nombre) VALUES ("Administrador");
 INSERT INTO Permiso (Nombre) VALUES ("Moderador");
 INSERT INTO Permiso (Nombre) VALUES ("Usuario");
 
-INSERT INTO PermisoUsuario (ID_Permiso, ID_Usuario) VALUES (1, 1);
+INSERT INTO PermisoUsuario (PermisoId, UsuarioId) VALUES (1, 1);

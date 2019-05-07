@@ -2,50 +2,237 @@
 
 class Usuario
 {
-    private $usuario;
-    private $pass;
+    private $id;
+    private $nombre;
+    private $apellido;
+    private $username;
+    private $upassword;
+    private $email;
+    private $telefono;
+    private $ubicacionId;
+    private $rolId;
+    private $fechaNacimiento;
+    private $fechaBaneo;
+    private $fechaBaja;
 
     /**
-     * Usuario constructor.
-     * @param $usuario
-     * @param $pass
+     * @return mixed
      */
-    public function __construct($usuario, $pass)
+    public function getId()
     {
-        $this->usuario = $usuario;
-        $this->pass = $pass;
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**
      * @return mixed
      */
-    public function getUsuario()
+    public function getNombre()
     {
-        return $this->usuario;
+        return $this->nombre;
     }
 
     /**
-     * @param mixed $usuario
+     * @param mixed $nombre
      */
-    public function setUsuario($usuario)
+    public function setNombre($nombre)
     {
-        $this->usuario = $usuario;
+        $this->nombre = $nombre;
     }
 
     /**
      * @return mixed
      */
-    public function getPass()
+    public function getApellido()
     {
-        return $this->pass;
+        return $this->apellido;
     }
 
     /**
-     * @param mixed $pass
+     * @param mixed $apellido
      */
-    public function setPass($pass)
+    public function setApellido($apellido)
     {
-        $this->pass = $pass;
+        $this->apellido = $apellido;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param mixed $username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpassword()
+    {
+        return $this->upassword;
+    }
+
+    /**
+     * @param mixed $upassword
+     */
+    public function setUpassword($upassword)
+    {
+        $this->upassword = $upassword;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    /**
+     * @param mixed $telefono
+     */
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUbicacionId()
+    {
+        return $this->ubicacionId;
+    }
+
+    /**
+     * @param mixed $ubicacionId
+     */
+    public function setUbicacionId($ubicacionId)
+    {
+        $this->ubicacionId = $ubicacionId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRolId()
+    {
+        return $this->rolId;
+    }
+
+    /**
+     * @param mixed $rolId
+     */
+    public function setRolId($rolId)
+    {
+        $this->rolId = $rolId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFechaNacimiento()
+    {
+        return $this->fechaNacimiento;
+    }
+
+    /**
+     * @param mixed $fechaNacimiento
+     */
+    public function setFechaNacimiento($fechaNacimiento)
+    {
+        $this->fechaNacimiento = $fechaNacimiento;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFechaBaneo()
+    {
+        return $this->fechaBaneo;
+    }
+
+    /**
+     * @param mixed $fechaBaneo
+     */
+    public function setFechaBaneo($fechaBaneo)
+    {
+        $this->fechaBaneo = $fechaBaneo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFechaBaja()
+    {
+        return $this->fechaBaja;
+    }
+
+    /**
+     * @param mixed $fechaBaja
+     */
+    public function setFechaBaja($fechaBaja)
+    {
+        $this->fechaBaja = $fechaBaja;
+    }
+
+    public function validarNombre() {
+        return FuncionesUtiles::esOracion($this->nombre)
+            && ($cantLetras = strlen($this->nombre)) <= 15
+            && $cantLetras >= 3;
+    }
+
+    public function validarApellido() {
+        return FuncionesUtiles::esOracion($this->apellido)
+            && ($cantLetras = strlen($this->apellido)) <= 15
+            && $cantLetras >= 3;
+    }
+
+    public function validarUsername() {
+        return FuncionesUtiles::esPalabraConNumeros($this->username)
+            && ($cantLetras = strlen($this->username)) <= 10
+            && $cantLetras >= 3;
+    }
+
+    public function validarEmail() {
+        return FuncionesUtiles::validarEmail($this->email);
+    }
+
+    public function validarTelefono() {
+        return (FuncionesUtiles::esEntero($this->telefono)
+            || FuncionesUtiles::esCadenaNumerica($this->telefono))
+            && strlen($this->telefono) === 10;
     }
 }
 

@@ -24,7 +24,7 @@ CREATE TABLE Usuario(
     FechaNac date NOT NULL,
     Username varchar(30) UNIQUE NOT NULL,
     UPassword varchar(100) NOT NULL,
-    Telefono integer UNIQUE NOT NULL,
+    Telefono integer NOT NULL,
     UbicacionId integer,
     RolId integer NOT NULL,
     Email varchar(30) UNIQUE NOT NULL,

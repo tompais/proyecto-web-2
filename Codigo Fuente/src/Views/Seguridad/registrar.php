@@ -26,63 +26,72 @@
 <![endif]-->
     <?php
     require_once "..\..\Helpers\Constantes.php";
+    require_once "../../Utils/FuncionesUtiles.php";
     require_once "..\..\Helpers\Conexion.php";
+    require_once "..\..\Enums\Roles.php";
+    require_once "../../Models/Usuario.php";
 
     if ($_POST && count($_POST) && isset($_POST[Constantes::BTNREGISTRAR])) {
-        $nombre = isset($_POST[Constantes::INPUTNOMBRE]) ? $_POST[Constantes::INPUTNOMBRE] : null;
-        $apellido = isset($_POST[Constantes::INPUTAPELLIDO]) ? $_POST[Constantes::INPUTAPELLIDO] : null;
-        $nickname = isset($_POST[Constantes::INPUTNICKNAME]) ? $_POST[Constantes::INPUTNICKNAME] : null;
         $pass = isset($_POST[Constantes::INPUTPASSWORD]) ? $_POST[Constantes::INPUTPASSWORD] : null;
         $rePass = isset($_POST[Constantes::INPUTREPASSWORD]) ? $_POST[Constantes::INPUTREPASSWORD] : null;
-        $email = isset($_POST[Constantes::INPUTEMAIL]) ? $_POST[Constantes::INPUTEMAIL] : null;
-        $fecha = isset($_POST[Constantes::INPUTFECHANACIMIENTO]) ? $_POST[Constantes::INPUTFECHANACIMIENTO] : null;
 
-        if (!$nombre || ($cantLetras = strlen($nombre)) > 15 || $cantLetras < 3 || !preg_match(Constantes::REGEXLETRASYESPACIO, $nombre)) {
+        $usuario = new Usuario();
+
+        $usuario->setNombre(isset($_POST[Constantes::INPUTNOMBRE]) ? $_POST[Constantes::INPUTNOMBRE] : null);
+        $usuario->setApellido(isset($_POST[Constantes::INPUTAPELLIDO]) ? $_POST[Constantes::INPUTAPELLIDO] : null);
+        $usuario->setUsername(isset($_POST[Constantes::INPUTNICKNAME]) ? $_POST[Constantes::INPUTNICKNAME] : null);
+        $usuario->setEmail(isset($_POST[Constantes::INPUTEMAIL]) ? $_POST[Constantes::INPUTEMAIL] : null);
+        $usuario->setFechaNacimiento(isset($_POST[Constantes::INPUTFECHANACIMIENTO]) ? date("Y-m-d", strtotime($_POST[Constantes::INPUTFECHANACIMIENTO])) : null);
+        $usuario->setTelefono(isset($_POST[Constantes::INPUTTELEFONO]) ? $_POST[Constantes::INPUTTELEFONO] : null);
+        $usuario->setRolId(Roles::USUARIO);
+
+        if (
+                !$usuario->validarNombre()
+            || !$usuario->validarApellido()
+            || !$usuario->validarUsername()
+            || !$usuario->validarEmail()
+            || !$usuario->validarTelefono()
+            || !FuncionesUtiles::confirmarPassword($pass, $rePass)
+        ) {
             header("location: ../NoCompletado/noCompletado.php");
             exit();
         }
-        if (!$apellido || ($cantLetras = strlen($apellido)) > 15 || $cantLetras < 3 || !preg_match(Constantes::REGEXLETRASYESPACIO, $apellido)) {
-            header("location: ../NoCompletado/noCompletado.php");
-            exit();
-        }
-        if (!$nickname || ($cantLetras = strlen($nickname)) > 15 || $cantLetras < 3 || !preg_match(Constantes::REGEXSOLOLETRAS, $nickname)) {
-            header("location: ../NoCompletado/noCompletado.php");
-            exit();
-        }
-        if (!$pass || ($cantLetras = strlen($pass)) > 15 || $cantLetras < 6  || !preg_match(Constantes::REGEXLETRASYNUMEROS, $pass)) {
-            header("location: ../NoCompletado/noCompletado.php");
-            exit();
-        }
-        if (!$rePass || strcmp($rePass, $pass)) {
-            header("location: ../NoCompletado/noCompletado.php");
-            exit();
-        }
-        $pass = strtoupper(sha1($pass));
-        if (!$email || !preg_match(Constantes::REGEXEMAIL, $email)) {
-            header("location: ../NoCompletado/noCompletado.php");
-            exit();
-        }
+
+        $usuario->setUpassword(sha1($pass));
 
         $conn = new Conexion();
+        $query = "INSERT INTO Usuario (Nombre, Apellido, FechaNac, Username, UPassword, Email, Telefono, RolId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        $query = "INSERT INTO Usuario (Nombre, Apellido, FechaNac, Username, UPassword, Email) VALUES ('$nombre', '$apellido', STR_TO_DATE('$fecha', '%d/%m/%Y'), '$nickname', '$pass', '$email')";
-        $resultado = $conn->ejecutarQuery($query);
-        if (!$resultado || !$conn->getCantFilasAfectadas()) {
+        if (
+                !$conn->setPreparedStmt($query)
+            || !$conn->vincularParametrosPreparedStatement("ssssssii", $usuario->getNombre(), $usuario->getApellido(), $usuario->getFechaNacimiento(), $usuario->getUsername(), $usuario->getUpassword(), $usuario->getEmail(), $usuario->getTelefono(), $usuario->getRolId())
+            || !$conn->ejecutarPreparedStatement()
+            || !$conn->getCantFilasAfectadasPreparedStatement()
+        ) {
             header("location: ../NoCompletado/noCompletado.php");
             $conn->desconectar();
             exit();
         }
 
-        $query = "SELECT ID FROM Usuario WHERE Username LIKE '$nickname'";
-        $resultado = $conn->ejecutarQuery($query);
-        if (!$resultado || !$conn->getCantFilasAfectadas()) {
+        $conn->cerrarPreparedStatement();
+
+        $query = "SELECT Id FROM Usuario WHERE Username LIKE ?";
+
+        if (
+                !$conn->setPreparedStmt($query)
+            || !$conn->vincularParametrosPreparedStatement("s", $usuario->getUsername())
+            || !$conn->ejecutarPreparedStatement()
+            || !$conn->almacenarResultadoPreparedStatementEnMemoria()
+            || !$conn->getCantFilasSeleccionadasPreparedStatement()
+        ) {
             header("location: ../NoCompletado/noCompletado.php");
             $conn->desconectar();
             exit();
         }
-        header("location: ..registracionExitosa.php");
+        header("location: registracionExitosa.php");
 
         $conn->desconectar();
+
     }
     ?>
     <div class="container-fluid">
@@ -90,7 +99,7 @@
             <h4 class="mb-4 text-center">Regístrese</h4>
 
             <div class="form-row">
-                <div class="col-lg">
+                <div class="col-md">
                     <div class="form-group">
                         <label for="inputNombre">Nombre</label>
                         <input type="text" name="inputNombre" id="inputNombre" class="form-control" placeholder="Ej: Pepe">
@@ -99,7 +108,7 @@
                         <div id="errorNombre3" class="error"> <i class="fas fa-exclamation-triangle"></i> Solo letras por favor</div>
                     </div>
                 </div>
-                <div class="col-lg">
+                <div class="col-md">
                     <div class="form-group">
                         <label for="inputApellido">Apellido</label>
                         <input type="text" name="inputApellido" id="inputApellido" class="form-control" placeholder="Ej: González">
@@ -111,7 +120,7 @@
             </div>
 
             <div class="form-row">
-                <div class="col-lg">
+                <div class="col-md">
                     <div class="form-group">
                         <label for="inputNickname">Nickname</label>
                         <input type="text" name="inputNickname" id="inputNickname" class="form-control" placeholder="Ej: pgonzalez">
@@ -120,7 +129,7 @@
                         <div id="errorNickname3" class="error"> <i class="fas fa-exclamation-triangle"></i> Solo letras y numero por favor</div>
                     </div>
                 </div>
-                <div class="col-lg">
+                <div class="col-md">
                     <div class="form-group">
                         <label for="inputEmail">Email</label>
                         <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="ejemplo@correo.com">
@@ -131,7 +140,7 @@
             </div>
 
             <div class="form-row">
-                <div class="col-lg">
+                <div class="col-md">
                     <div class="form-group">
                         <label for="inputPassword">Contraseña</label>
                         <div class="input-group">
@@ -145,7 +154,7 @@
                         <div id="errorPassword3" class="error"> <i class="fas fa-exclamation-triangle"></i> Solo letras y numero por favor</div>
                     </div>
                 </div>
-                <div class="col-lg">
+                <div class="col-md">
                     <div class="form-group">
                         <label for="inputRePassword">Confirme su Contraseña</label>
                         <div class="input-group">
@@ -162,14 +171,14 @@
             </div>
 
             <div class="form-row">
-                <div class="col-lg">
+                <div class="col-md">
                     <div class="form-group">
                       <label for="inputTelefono">Teléfono</label>
                       <input type="number" class="form-control" name="inputTelefono" id="inputTelefono" aria-describedby="helpIdInputTelefono" placeholder="111234567">
                       <small id="helpIdInputTelefono" class="form-text text-muted">Sin código de área</small>
                     </div>
                 </div>
-                <div class="col-lg">
+                <div class="col-md">
                     <div class="form-group">
                         <label for="inputFechaNacimiento">Fecha de Nacimiento</label>
                         <div class="input-group">

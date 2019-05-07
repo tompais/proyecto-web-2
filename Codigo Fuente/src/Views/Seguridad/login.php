@@ -56,30 +56,50 @@
             <small>¿Olvidaste tu contraseña? <a href="forgotPassword.php">Click aquí</a></small>
             <small>¿Primera vez aquí? <a href="registrar.php">Regístrate</a></small>
         </div>
+
         <?php
-        require_once("..\..\Helpers\Conexion.php");
-        require_once("..\..\Helpers\Constantes.php");
+
+        require_once "..\..\Helpers\Constantes.php";
+        require_once "../../Utils/FuncionesUtiles.php";
+        require_once "..\..\Helpers\Conexion.php";
+        require_once "..\..\Enums\Roles.php";
+        require_once "../../Models/Usuario.php";
+
         if ($_POST && count($_POST) && isset($_POST[Constantes::BTNINGRESAR])) {
-            $usuario = isset($_POST[Constantes::INPUTEMAILORNICK]) ? strtolower($_POST[Constantes::INPUTEMAILORNICK]) : null;
-            $password = isset($_POST[Constantes::INPUTPASSWORD]) ? $_POST[Constantes::INPUTPASSWORD] : null;
+
+            $usuarioLogin = new Usuario();
+
+            $usuarioLogin->setUsername(isset($_POST[Constantes::INPUTEMAILORNICK]) ? strtolower($_POST[Constantes::INPUTEMAILORNICK]) : null);
+            $usuarioLogin->setUpassword(isset($_POST[Constantes::INPUTPASSWORD]) ? $_POST[Constantes::INPUTPASSWORD] : null);
+
+            if (!$usuarioLogin->validarUsernameOEmail() && !FuncionesUtiles::esPalabraConNumeros($usuarioLogin->getUpassword())){
+                header("location: ../NoCompletado/noCompletado.php");
+                exit();
+            }
+
+            $conn = new Conexion();
+
+            $query = "SELECT Username, UPassword, Email FROM Usuario  where Username LIKE ? OR Email LIKE ? AND UPassword LIKE ?";
+
             if (
-                $usuario == null
-                || (!preg_match(Constantes::REGEXLETRASYNUMEROS, $usuario)
-                    && !preg_match(Constantes::REGEXEMAIL, $usuario))
-                || $password == null || !preg_match(Constantes::REGEXLETRASYNUMEROS, $password)
+                !$conn->setPreparedStmt($query)
+                || !$conn->vincularParametrosPreparedStatement("sss", $usuarioLogin->getUsername(), $usuarioLogin->getUsername(), strtoupper(sha1($usuarioLogin->getUpassword())))
+                || !$conn->ejecutarPreparedStatement()
+                || !$conn->almacenarResultadoPreparedStatementEnMemoria()
+                || !$conn->getCantFilasSeleccionadasPreparedStatement()
+                || !($usuarioLogueado = $conn->getArrayAsociativoPreparedStatement())
+                || !$conn->recuperarResultadoPreparedStatement()
             ) {
                 header("location: ../NoCompletado/noCompletado.php");
                 exit();
             }
-            $password = strtoupper(sha1($password));
-            $query = "SELECT Username, UPassword, Email FROM Usuario  where Username LIKE '$usuario' OR Email LIKE '$usuario' AND UPassword LIKE '$password'";
-            $conn = new Conexion();
-            $resultado = $conn->ejecutarQuery($query);
+
             //si el usuario ingresado es igual al usuario(db) o el mail ingresado es igual al mail(db)
-            if ($resultado && $conn->getCantFilasAfectadas() && ($fila = $conn->getFila($resultado)) && ($usuario == $fila[0] or $usuario == $fila[2]) && $password == $fila[1])
+            if ($conn->getCantFilasAfectadasPreparedStatement() && ($usuarioLogin->getUsername() == $usuarioLogueado["Username"] || $usuarioLogin->getUsername() == $usuarioLogueado["Email"]) && sha1($usuarioLogin->getUPassword()) == $usuarioLogueado["UPassword"])
                 header("location: ../Home/main.php");
             else
                 header("location: ../NoCompletado/noCompletado.php");
+
             $conn->desconectar();
         }
         ?>

@@ -13,7 +13,7 @@ class Conexion
         $this->user = "root";
         $this->pass = "";
         $this->host = "localhost";
-        $this->db = "pokemons_PaisTomas_MartinezAlejo";
+        $this->db = "pw";
 
         $this->conectar();
     }

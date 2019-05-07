@@ -259,7 +259,7 @@ class Usuario
 
     public function validarSexo() {
         return (FuncionesUtiles::esEntero($this->sexoId) || FuncionesUtiles::esCadenaNumerica($this->sexoId))
-            && (Sexos::MASCULINO === $this->sexoId || Sexos::FEMENINO === $this->sexoId || Sexos::OTRO === $this->sexoId);
+            && (Sexos::MASCULINO == $this->sexoId || Sexos::FEMENINO == $this->sexoId || Sexos::OTRO == $this->sexoId);
     }
 
 }

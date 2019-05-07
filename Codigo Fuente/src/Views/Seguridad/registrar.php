@@ -46,7 +46,7 @@
         $usuario->setRolId(Roles::USUARIO);
 
         if (
-                !$usuario->validarNombre()
+            !$usuario->validarNombre()
             || !$usuario->validarApellido()
             || !$usuario->validarUsername()
             || !$usuario->validarEmail()
@@ -63,7 +63,7 @@
         $query = "INSERT INTO Usuario (Nombre, Apellido, FechaNac, Username, UPassword, Email, Telefono, RolId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         if (
-                !$conn->setPreparedStmt($query)
+            !$conn->setPreparedStmt($query)
             || !$conn->vincularParametrosPreparedStatement("ssssssii", $usuario->getNombre(), $usuario->getApellido(), $usuario->getFechaNacimiento(), $usuario->getUsername(), $usuario->getUpassword(), $usuario->getEmail(), $usuario->getTelefono(), $usuario->getRolId())
             || !$conn->ejecutarPreparedStatement()
             || !$conn->getCantFilasAfectadasPreparedStatement()
@@ -78,7 +78,7 @@
         $query = "SELECT Id FROM Usuario WHERE Username LIKE ?";
 
         if (
-                !$conn->setPreparedStmt($query)
+            !$conn->setPreparedStmt($query)
             || !$conn->vincularParametrosPreparedStatement("s", $usuario->getUsername())
             || !$conn->ejecutarPreparedStatement()
             || !$conn->almacenarResultadoPreparedStatementEnMemoria()
@@ -91,7 +91,6 @@
         header("location: registracionExitosa.php");
 
         $conn->desconectar();
-
     }
     ?>
     <div class="container-fluid">
@@ -173,9 +172,32 @@
             <div class="form-row">
                 <div class="col-md">
                     <div class="form-group">
-                      <label for="inputTelefono">Teléfono</label>
-                      <input type="number" class="form-control" name="inputTelefono" id="inputTelefono" aria-describedby="helpIdInputTelefono" placeholder="111234567">
-                      <small id="helpIdInputTelefono" class="form-text text-muted">Sin código de área</small>
+                        <label for="selectSexo">Sexo</label>
+                        <select class="form-control" name="selectSexo" id="selectSexo">
+                            <?php
+
+                            $query = "SELECT * FROM Sexo";
+
+                            $conn = new Conexion();
+
+                            if (
+                                !$conn->setPreparedStmt($query)
+                                || !$conn->ejecutarPreparedStatement()
+                                || !$conn->almacenarResultadoPreparedStatementEnMemoria()
+                                || !$conn->getCantFilasSeleccionadasPreparedStatement()
+                                || !($sexos = $conn->getArrayAsociativoPreparedStatement())
+                            ) {
+                                header("location: ../NoCompletado/noCompletado.php");
+                                $conn->desconectar();
+                                exit();
+                            }
+
+                            while ($conn->recuperarResultadoPreparedStatement()) {
+                                echo "<option value='" . $sexos["Id"] . "'>" . $sexos["Nombre"] . "</option>";
+                            }
+
+                            ?>
+                        </select>
                     </div>
                 </div>
                 <div class="col-md">
@@ -188,6 +210,19 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md">
+                    <div class="form-group">
+                        <label for="inputTelefono">Teléfono</label>
+                        <input type="number" class="form-control" name="inputTelefono" id="inputTelefono" aria-describedby="helpIdInputTelefono" placeholder="111234567">
+                        <small id="helpIdInputTelefono" class="form-text text-muted">Sin código de área</small>
+                    </div>
+                </div>
+                <div class="col-md">
+                    
                 </div>
             </div>
 

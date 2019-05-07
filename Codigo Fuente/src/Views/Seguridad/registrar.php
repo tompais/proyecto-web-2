@@ -29,6 +29,7 @@
     require_once "../../Utils/FuncionesUtiles.php";
     require_once "..\..\Helpers\Conexion.php";
     require_once "..\..\Enums\Roles.php";
+    require_once "../../Enums/Sexos.php";
     require_once "../../Models/Usuario.php";
 
     if ($_POST && count($_POST) && isset($_POST[Constantes::BTNREGISTRAR])) {
@@ -43,7 +44,7 @@
         $usuario->setEmail(isset($_POST[Constantes::INPUTEMAIL]) ? $_POST[Constantes::INPUTEMAIL] : null);
         $usuario->setFechaNacimiento(isset($_POST[Constantes::INPUTFECHANACIMIENTO]) ? date("Y-m-d", strtotime($_POST[Constantes::INPUTFECHANACIMIENTO])) : null);
         $usuario->setTelefono(isset($_POST[Constantes::INPUTTELEFONO]) ? $_POST[Constantes::INPUTTELEFONO] : null);
-        $usuario->setSexoId(isset(Constantes::SELECTSEXO) ? $_POST[Constantes::SELECTSEXO] : null);
+        $usuario->setSexoId(isset($_POST[Constantes::SELECTSEXO]) ? $_POST[Constantes::SELECTSEXO] : null);
         $usuario->setRolId(Roles::USUARIO);
 
         if (
@@ -59,7 +60,8 @@
             exit();
         }
 
-        $usuario->setUpassword(sha1($pass));
+        $usuario->setUpassword(strtoupper(sha1($pass)));
+
 
         $conn = new Conexion();
         $query = "INSERT INTO Usuario (Nombre, Apellido, FechaNac, Username, UPassword, Email, Telefono, RolId, SexoId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -77,7 +79,7 @@
 
         $conn->cerrarPreparedStatement();
 
-        $query = "SELECT Id FROM Usuario WHERE Username LIKE ?";
+        $query = "SELECT 1 FROM Usuario WHERE Username LIKE ?";
 
         if (
             !$conn->setPreparedStmt($query)

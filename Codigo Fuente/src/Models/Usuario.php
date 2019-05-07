@@ -9,11 +9,28 @@ class Usuario
     private $upassword;
     private $email;
     private $telefono;
-    private $ubicacionId;
+    private $domicilioId;
+    private $sexoId;
     private $rolId;
     private $fechaNacimiento;
     private $fechaBaneo;
     private $fechaBaja;
+
+    /**
+     * @return mixed
+     */
+    public function getSexoId()
+    {
+        return $this->sexoId;
+    }
+
+    /**
+     * @param mixed $sexoId
+     */
+    public function setSexoId($sexoId)
+    {
+        $this->sexoId = $sexoId;
+    }
 
     /**
      * @return mixed
@@ -130,17 +147,17 @@ class Usuario
     /**
      * @return mixed
      */
-    public function getUbicacionId()
+    public function getDomicilioId()
     {
-        return $this->ubicacionId;
+        return $this->domicilioId;
     }
 
     /**
-     * @param mixed $ubicacionId
+     * @param mixed $domicilioId
      */
-    public function setUbicacionId($ubicacionId)
+    public function setDomicilioId($domicilioId)
     {
-        $this->ubicacionId = $ubicacionId;
+        $this->domicilioId = $domicilioId;
     }
 
     /**
@@ -239,6 +256,16 @@ class Usuario
         return FuncionesUtiles::esPalabraConNumeros($this->username)
             && ($cantLetras = strlen($this->username)) <= 10
             && $cantLetras >= 3;
+    }
+
+    public function validarRol() {
+        return (FuncionesUtiles::esEntero($this->rolId) || FuncionesUtiles::esCadenaNumerica($this->rolId))
+            && (Roles::ADMINISTRADOR === $this->rolId || Roles::MODERADOR === $this->rolId || Roles::USUARIO === $this->rolId);
+    }
+
+    public function validarSexo() {
+        return (FuncionesUtiles::esEntero($this->sexoId) || FuncionesUtiles::esCadenaNumerica($this->sexoId))
+            && (Sexos::MASCULINO === $this->sexoId || Sexos::FEMENINO === $this->sexoId || Sexos::OTRO === $this->sexoId);
     }
 
 }

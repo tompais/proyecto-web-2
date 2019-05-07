@@ -33,8 +33,8 @@
             </div>
         </form>
         <?php
-        require_once("..\..\Helpers\Constantes.php");
-        require_once("..\..\Helpers\Conexion.php");
+        require_once "..\..\Helpers\Constantes.php";
+        require_once "..\..\Helpers\Conexion.php";
 
         if ($_POST && count($_POST) && isset($_POST[Constantes::BTNRECUPERARPASSWORD])) {
             $usuario = isset($_POST[Constantes::BTNRECUPERARPASSWORD]) ? strtolower($_POST[Constantes::INPUTEMAILORNICK]) : null;

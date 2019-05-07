@@ -234,6 +234,13 @@ class Usuario
             || FuncionesUtiles::esCadenaNumerica($this->telefono))
             && strlen($this->telefono) === 10;
     }
+
+    public function validarUsernameOEmail() {
+        return (FuncionesUtiles::esPalabraConNumeros($this->username)
+            && ($cantLetras = strlen($this->username)) <= 10
+            && $cantLetras >= 3)
+            || FuncionesUtiles::validarEmail($this->username);
+    }
 }
 
 

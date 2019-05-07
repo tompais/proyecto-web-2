@@ -43,6 +43,7 @@
         $usuario->setEmail(isset($_POST[Constantes::INPUTEMAIL]) ? $_POST[Constantes::INPUTEMAIL] : null);
         $usuario->setFechaNacimiento(isset($_POST[Constantes::INPUTFECHANACIMIENTO]) ? date("Y-m-d", strtotime($_POST[Constantes::INPUTFECHANACIMIENTO])) : null);
         $usuario->setTelefono(isset($_POST[Constantes::INPUTTELEFONO]) ? $_POST[Constantes::INPUTTELEFONO] : null);
+        $usuario->setSexoId(isset(Constantes::SELECTSEXO) ? $_POST[Constantes::SELECTSEXO] : null);
         $usuario->setRolId(Roles::USUARIO);
 
         if (
@@ -52,6 +53,7 @@
             || !$usuario->validarEmail()
             || !$usuario->validarTelefono()
             || !FuncionesUtiles::confirmarPassword($pass, $rePass)
+            || !$usuario->validarSexo()
         ) {
             header("location: ../NoCompletado/noCompletado.php");
             exit();
@@ -60,11 +62,11 @@
         $usuario->setUpassword(sha1($pass));
 
         $conn = new Conexion();
-        $query = "INSERT INTO Usuario (Nombre, Apellido, FechaNac, Username, UPassword, Email, Telefono, RolId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO Usuario (Nombre, Apellido, FechaNac, Username, UPassword, Email, Telefono, RolId, SexoId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         if (
             !$conn->setPreparedStmt($query)
-            || !$conn->vincularParametrosPreparedStatement("ssssssii", $usuario->getNombre(), $usuario->getApellido(), $usuario->getFechaNacimiento(), $usuario->getUsername(), $usuario->getUpassword(), $usuario->getEmail(), $usuario->getTelefono(), $usuario->getRolId())
+            || !$conn->vincularParametrosPreparedStatement("ssssssiii", $usuario->getNombre(), $usuario->getApellido(), $usuario->getFechaNacimiento(), $usuario->getUsername(), $usuario->getUpassword(), $usuario->getEmail(), $usuario->getTelefono(), $usuario->getRolId(), $usuario->getSexoId())
             || !$conn->ejecutarPreparedStatement()
             || !$conn->getCantFilasAfectadasPreparedStatement()
         ) {

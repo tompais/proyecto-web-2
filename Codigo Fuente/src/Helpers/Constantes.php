@@ -12,6 +12,7 @@ abstract class Constantes
     const INPUTEMAIL = "inputEmail";
     const INPUTFECHANACIMIENTO = "inputFechaNacimiento";
     const INPUTTELEFONO = "inputTelefono";
+    const SELECTSEXO = "selectSexo";
 
     //Botones
     const BTNINGRESAR = "btnIngresar";

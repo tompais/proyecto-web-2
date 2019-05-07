@@ -69,36 +69,79 @@
 
             $usuarioLogin = new Usuario();
 
-            $usuarioLogin->setUsername(isset($_POST[Constantes::INPUTEMAILORNICK]) ? strtolower($_POST[Constantes::INPUTEMAILORNICK]) : null);
-            $usuarioLogin->setUpassword(isset($_POST[Constantes::INPUTPASSWORD]) ? $_POST[Constantes::INPUTPASSWORD] : null);
+            $userNameOrEmail =isset($_POST[Constantes::INPUTEMAILORNICK]) ? strtolower($_POST[Constantes::INPUTEMAILORNICK]) : null;
+            $password = isset($_POST[Constantes::INPUTPASSWORD]) ? $_POST[Constantes::INPUTPASSWORD] : null;
 
-            if (!$usuarioLogin->validarUsernameOEmail() && !FuncionesUtiles::esPalabraConNumeros($usuarioLogin->getUpassword())){
+            if (FuncionesUtiles::esPalabraConNumeros($userNameOrEmail)){
+                $usuarioLogin->setUsername($userNameOrEmail);
+            }
+            else if (FuncionesUtiles::validarEmail($userNameOrEmail)){
+                $usuarioLogin->setEmail($userNameOrEmail);
+            }
+            else{
                 header("location: ../NoCompletado/noCompletado.php");
                 exit();
             }
+
+            if (FuncionesUtiles::esPalabraConNumeros($password)){
+                $usuarioLogin->setUpassword($password);
+            }
+            else{
+                header("location: ../NoCompletado/noCompletado.php");
+                exit();
+            }
+
+
 
             $conn = new Conexion();
 
-            $query = "SELECT Username, UPassword, Email FROM Usuario  where Username LIKE ? OR Email LIKE ? AND UPassword LIKE ?";
+            $queryConNickname = "SELECT Username, UPassword FROM Usuario  where Username LIKE ?  AND UPassword LIKE ?";
 
-            if (
-                !$conn->setPreparedStmt($query)
-                || !$conn->vincularParametrosPreparedStatement("sss", $usuarioLogin->getUsername(), $usuarioLogin->getUsername(), strtoupper(sha1($usuarioLogin->getUpassword())))
-                || !$conn->ejecutarPreparedStatement()
-                || !$conn->almacenarResultadoPreparedStatementEnMemoria()
-                || !$conn->getCantFilasSeleccionadasPreparedStatement()
-                || !($usuarioLogueado = $conn->getArrayAsociativoPreparedStatement())
-                || !$conn->recuperarResultadoPreparedStatement()
-            ) {
-                header("location: ../NoCompletado/noCompletado.php");
-                exit();
+            $queryConEmail = "SELECT Email, UPassword FROM Usuario  where Email LIKE ? AND UPassword LIKE ?";
+
+            if ($usuarioLogin->getUsername() === $userNameOrEmail){
+
+                if (
+                    !$conn->setPreparedStmt($queryConNickname)
+                    || !$conn->vincularParametrosPreparedStatement("ss", $usuarioLogin->getUsername(), strtoupper(sha1($usuarioLogin->getUpassword())))
+                    || !$conn->ejecutarPreparedStatement()
+                    || !$conn->almacenarResultadoPreparedStatementEnMemoria()
+                    || !$conn->getCantFilasSeleccionadasPreparedStatement()
+                    || !($usuarioLogueado = $conn->getArrayAsociativoPreparedStatement())
+                    || !$conn->recuperarResultadoPreparedStatement()
+                ) {
+                    header("location: ../NoCompletado/noCompletado.php");
+                    exit();
+                }
+
+                if ($conn->getCantFilasAfectadasPreparedStatement() && ($usuarioLogin->getUsername() == $usuarioLogueado["Username"] && sha1($usuarioLogin->getUPassword()) == $usuarioLogueado["UPassword"]))
+                    header("location: ../Home/main.php");
+                else
+                    header("location: ../NoCompletado/noCompletado.php");
+
             }
+            elseif ($usuarioLogin->getEmail() === $userNameOrEmail){
 
-            //si el usuario ingresado es igual al usuario(db) o el mail ingresado es igual al mail(db)
-            if ($conn->getCantFilasAfectadasPreparedStatement() && ($usuarioLogin->getUsername() == $usuarioLogueado["Username"] || $usuarioLogin->getUsername() == $usuarioLogueado["Email"]) && sha1($usuarioLogin->getUPassword()) == $usuarioLogueado["UPassword"])
+                if (
+                    !$conn->setPreparedStmt($queryConEmail)
+                    || !$conn->vincularParametrosPreparedStatement("ss", $usuarioLogin->getEmail(), strtoupper(sha1($usuarioLogin->getUpassword())))
+                    || !$conn->ejecutarPreparedStatement()
+                    || !$conn->almacenarResultadoPreparedStatementEnMemoria()
+                    || !$conn->getCantFilasSeleccionadasPreparedStatement()
+                    || !($usuarioLogueado = $conn->getArrayAsociativoPreparedStatement())
+                    || !$conn->recuperarResultadoPreparedStatement()
+                ) {
+                    header("location: ../NoCompletado/noCompletado.php");
+                    exit();
+                }
+
+                if ($conn->getCantFilasAfectadasPreparedStatement() && ($usuarioLogin->getEmail() == $usuarioLogueado["Email"] && sha1($usuarioLogin->getUPassword()) == $usuarioLogueado["UPassword"]))
                 header("location: ../Home/main.php");
-            else
-                header("location: ../NoCompletado/noCompletado.php");
+                else
+                    header("location: ../NoCompletado/noCompletado.php");
+
+
+            }
 
             $conn->desconectar();
         }

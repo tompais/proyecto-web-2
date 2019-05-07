@@ -252,12 +252,6 @@ class Usuario
             && strlen($this->telefono) === 10;
     }
 
-    public function validarUsernameEnElLogin() {
-        return FuncionesUtiles::esPalabraConNumeros($this->username)
-            && ($cantLetras = strlen($this->username)) <= 10
-            && $cantLetras >= 3;
-    }
-
     public function validarRol() {
         return (FuncionesUtiles::esEntero($this->rolId) || FuncionesUtiles::esCadenaNumerica($this->rolId))
             && (Roles::ADMINISTRADOR === $this->rolId || Roles::MODERADOR === $this->rolId || Roles::USUARIO === $this->rolId);

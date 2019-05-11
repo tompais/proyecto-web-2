@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Proyecto Web 2 - Login</title>
+    <title>Login</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="..\..\wwwroot\lib\bootstrap\css\bootstrap.min.css">
@@ -21,16 +21,16 @@
 
 <body>
     <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
     <div class="container-fluid">
         <form action="login.php" method="post" class="border rounded shadow w-25 mx-auto p-4 mt-5">
             <h4 class="mb-4 text-center">Login de Usuario</h4>
 
             <div class="form-group">
                 <label for="inputEmailOrNick">Nickname/Email</label>
-                <input type="text" name="inputEmailOrNick" id="inputEmailOrNick" class="form-control" >
-                <div id="errorNick" class="error"> <i class="fas fa-exclamation-triangle"></i > Ingrese su nombre de usuario o Email</div>
+                <input type="text" name="inputEmailOrNick" id="inputEmailOrNick" class="form-control">
+                <div id="errorNick" class="error"> <i class="fas fa-exclamation-triangle"></i> Ingrese su nombre de usuario o Email</div>
                 <div id="errorNick2" class="error"> <i class="fas fa-exclamation-triangle"></i> Escriba su nick o email de forma correcta</div>
             </div>
 
@@ -56,65 +56,66 @@
                 <small>¿Olvidaste tu contraseña? <a href="forgotPassword.php">Click aquí</a></small>
                 <small>¿Primera vez aquí? <a href="registrar.php">Regístrate</a></small>
             </div>
+
             <?php
-                session_start();
-                $regex = array(
-                "usuario" => "/^[0-9a-zA-Z]+$/",
-                "email" => "/^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/",
-                );
-                //include("..\..\Codigo Fuente\src\Helpers\Conexion.php");
-                include("..\..\Helpers\Conexion.php");
-                /*
-                $db = array(
-                    "user" => "root",
-                    "pass" => "",
-                    "db" => "pw2",
-                );
-                */
-                $query = "SELECT Username, UPassword, Email FROM usuario where ";
-            
-                if ($_POST != null && count($_POST) != 0){
-                    if ( !preg_match($regex["usuario"], $_POST["inputEmailOrNick"]) or !preg_match($regex["email"], $_POST["inputEmailOrNick"]) ) 
-                        //{
-                        //usuario incorrecto
-                        die("Login incorrecto");
-                        //}
-                    $usuario = strtolower($_POST["inputEmailOrNick"] );
-                    $password = strtoupper( sha1($_POST["inputPassword"]) );
-                    
+
+            require_once "../../Helpers/Constantes.php";
+            require_once "../../Utils/FuncionesUtiles.php";
+            require_once "../../Helpers/Conexion.php";
+            require_once "../../Enums/Roles.php";
+            require_once "../../Models/Usuario.php";
+
+            if ($_POST && count($_POST) && isset($_POST[Constantes::BTNINGRESAR])) {
+
+                $usuarioLogin = new Usuario();
+
+                $userNameOrEmail = isset($_POST[Constantes::INPUTEMAILORNICK]) ? strtolower($_POST[Constantes::INPUTEMAILORNICK]) : null;
+                $password = isset($_POST[Constantes::INPUTPASSWORD]) ? $_POST[Constantes::INPUTPASSWORD] : null;
+
+                if (FuncionesUtiles::esPalabraConNumeros($userNameOrEmail)) {
+                    $usuarioLogin->setUsername($userNameOrEmail);
+                    $usuarioLogin->setEmail(null);
+                } else if (FuncionesUtiles::validarEmail($userNameOrEmail)) {
+                    $usuarioLogin->setEmail($userNameOrEmail);
+                    $usuarioLogin->setUsername(null);
                 } else {
-                    //usuario incorrecto
-                    die("Login incorrecto");
+                    header("location: ../NoCompletado/noCompletado.php");
+                    exit();
                 }
-               
-                //$conn = new Conexion( $db[user],$db[pass],$db[db];
+
+                if (FuncionesUtiles::esPalabraConNumeros($password)) {
+                    $usuarioLogin->setUpassword(strtoupper(sha1($password)));
+                } else {
+                    header("location: ../NoCompletado/noCompletado.php");
+                    exit();
+                }
+
+
+
                 $conn = new Conexion();
-                if( preg_match($regex["usuario"],$usuario) ) {
-                    $query .= "idUsuario like '$usuario'";
-                } else {
-                    $query .= "email like '$usuario'":
+
+                $query = "SELECT 1 FROM Usuario  where (Username LIKE ? OR Email LIKE ?) AND UPassword LIKE ?";
+
+
+                if (
+                    !$conn->setPreparedStmt($query)
+                    || !$conn->vincularParametrosPreparedStatement("sss", $usuarioLogin->getUsername(), $usuarioLogin->getEmail(), $usuarioLogin->getUpassword())
+                    || !$conn->ejecutarPreparedStatement()
+                    || !$conn->almacenarResultadoPreparedStatementEnMemoria()
+                    || !$conn->getCantFilasSeleccionadasPreparedStatement()
+                ) {
+                    header("location: ../NoCompletado/noCompletado.php");
+                    exit();
                 }
 
-                Sresultado = $conn=>ejecutarQuery($query);
+                header("location: ../Home/main.php");
 
-                if(!Sresultado){
-                    die("Ha ocurrido un error al ejecutar la query");
-                }
-                $fila = $conn->getFila(Sresultado);
-                //si el usuario ingresado es igual al usuario(db) o el mail ingresado es igual al mail(db)
-                if( ($usuario == $fila[0] or $usuario == $fila[3]) && $pass == $fila[1]) {
-                //cosas a añadir a session
-                header("location: main.php");
-                exit();
-                }
-                else {
-                die("Login incorrecto");
-                }
                 $conn->desconectar();
-                */
+            }
             ?>
         </form>
     </div>
+
     <script src="..\..\wwwroot\lib\jquery\jquery-3.4.0.min.js"></script>
     <script src="..\..\wwwroot\lib\bootstrap\js\bootstrap.min.js"></script>
     <script src="..\..\wwwroot\lib\fontawesome\js\all.min.js"></script>
@@ -126,6 +127,7 @@
     <script src="..\..\wwwroot\lib\alertifyjs\alertify.min.js"></script>
     <script src="..\..\wwwroot\lib\validate\validate.min.js"></script>
     <script src="..\..\wwwroot\js\seguridad\validacionLogin.js"></script>
+
 </body>
 
 </html>

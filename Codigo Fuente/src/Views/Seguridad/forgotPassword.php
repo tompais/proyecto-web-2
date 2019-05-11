@@ -3,13 +3,13 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js">
+<html lang="es">
 <!--<![endif]-->
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Proyecto Web 2 - Olvidé Contraseña</title>
+    <title>Olvidé Contraseña</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="..\..\wwwroot\lib\bootstrap\css\bootstrap.min.css">
@@ -32,54 +32,30 @@
                 <button type="submit" name="btnRecuperarPassword" id="btnRecuperarPassword" class="btn btn-primary">Recuperar Contraseña</button>
             </div>
         </form>
-        <?php        
-        $regex = array(
-                "usuario" => "/^[0-9a-zA-Z]+$/",
-                "email" => "/^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/",
-                );
-        if ($_POST != null && count($_POST) != 0){
-            if ( !preg_match($regex["usuario"], $_POST["inputEmailOrNick"]) or !preg_match($regex["email"], $_POST["inputEmailOrNick"]) ) {
-                //usuario incorrecto
-                die("Usuario incorrecto");
-            }
-            $usuario = strtolower($_POST["inputEmailOrNick"] );
+        <?php
+        require_once "..\..\Helpers\Constantes.php";
+        require_once "..\..\Helpers\Conexion.php";
 
-        } else {
-            //usuario incorrecto
-            die("Login incorrecto");
-        }
-                    
-        
-            //include("..\..\Codigo Fuente\src\Helpers\Conexion.php");
-            include("..\..\Helpers\Conexion.php");
-        /*
-            $db = array(
-            "user" => "root";
-                "pass" => "";
-                "db" => "pw2";
-            );
-            */
-            $query = "SELECT Username, UPassword, Email FROM usuario where ";
-            //$conn = new Conexion( $db[user],$db[pass],$db[db];
+        if ($_POST && count($_POST) && isset($_POST[Constantes::BTNRECUPERARPASSWORD])) {
+            $usuario = isset($_POST[Constantes::BTNRECUPERARPASSWORD]) ? strtolower($_POST[Constantes::INPUTEMAILORNICK]) : null;
+            if ($usuario == null || !strcmp($usuario, "") || !preg_match(Constantes::REGEXLETRASYNUMEROS, $_POST[Constantes::INPUTEMAILORNICK]) || !preg_match(Constantes::REGEXEMAIL, $_POST[Constantes::INPUTEMAILORNICK])) {
+                header("location: ../NoCompletado/noCompletado.php");
+                exit();
+            }
+
             $conn = new Conexion();
-            if( preg_match($regex["usuario"],$usuario) ) {
-                    $query .= "idUsuario like '$usuario'";
-                } else {
-                    $query .= "email like '$usuario'":
-                }
-            
-            Sresultado = $conn=>ejecutarQuery($query);
+            $query = "SELECT Email FROM usuario where Username LIKE '$usuario' OR Email LIKE '$usuario'";
+            $resultado = $conn->ejecutarQuery($query);
 
-            if(!Sresultado){
-                die("Ha ocurrido un error al ejecutar la query");
-            }
-            //cosas a hacer para recuperar el password
-            
-    
+            if (!$resultado)
+                header("location: ../NoCompletado/noCompletado.php");
+
             $conn->desconectar();
-            */        
+        }
+
+
         ?>
-        
+
     </div>
     <script src="..\..\wwwroot\lib\jquery\jquery-3.4.0.min.js"></script>
     <script src="..\..\wwwroot\lib\bootstrap\js\bootstrap.min.js"></script>

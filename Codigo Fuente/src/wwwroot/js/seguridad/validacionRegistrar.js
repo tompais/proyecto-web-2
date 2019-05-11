@@ -2,11 +2,11 @@ $(document).ready(function() {
 
     $("#btnRegistrar").click(function() {
 
-        var exprEmail = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
-        var exprLet = /^[a-zA-Z]+$/;
-        var exprLetAndNum = /^[0-9a-zA-Z]+$/;
-        var exprNum = /^[0-9]+$/;
-        var exprLetAndSpace = /^[a-zA-Z]+(\s*[a-zA-Z]*)*[a-zA-Z]+$/;
+        const exprEmail = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+        const exprLet = /^[a-zA-Z]+$/;
+        const exprLetAndNum = /^[0-9a-zA-Z]+$/;
+        const exprNum = /^[0-9]+$/;
+        const exprLetAndSpace = /^[a-zA-Z]+(\s*[a-zA-Z]*)*[a-zA-Z]+$/;
 
         var nombre = $('#inputNombre').val();
         var apellido = $('#inputApellido').val();
@@ -15,10 +15,10 @@ $(document).ready(function() {
         var rePass = $('#inputRePassword').val();
         var email = $('#inputEmail').val();
         var fecha = $('#inputFechaNacimiento').val();
-        var prov = $('#inputProvincia').val();
-        var localidad = $('#inputLocalidad').val();
-        var calle = $('#inputCalle').val();
-        var altura = $('#inputAltura').val();
+        // var prov = $('#inputProvincia').val();
+        // var localidad = $('#inputLocalidad').val();
+        // var calle = $('#inputCalle').val();
+        // var altura = $('#inputAltura').val();
 
         /* Nombre */
 
@@ -160,109 +160,109 @@ $(document).ready(function() {
             $("#errorEmail2").fadeOut();
         }
 
-        /* Provincia */
+        // /* Provincia */
 
-        if (prov.length === 0){
-            $("#errorProv").fadeIn("slow");
-            return false;
-        }
-        else{
-            $("#errorProv").fadeOut();
-        }
+        // if (prov.length === 0){
+        //     $("#errorProv").fadeIn("slow");
+        //     return false;
+        // }
+        // else{
+        //     $("#errorProv").fadeOut();
+        // }
 
-        if (!exprLetAndSpace.test(prov)){
-            $("#errorProv2").fadeIn("slow");
-            return false;
-        }
-        else{
-            $("#errorProv2").fadeOut();
-        }
+        // if (!exprLetAndSpace.test(prov)){
+        //     $("#errorProv2").fadeIn("slow");
+        //     return false;
+        // }
+        // else{
+        //     $("#errorProv2").fadeOut();
+        // }
 
-        if (prov.length > 20 && prov.length < 8){
-            $("#errorProv3").fadeIn("slow");
-            return false;
-        }
-        else{
-            $("#errorProv3").fadeOut();
-        }
+        // if (prov.length > 20 && prov.length < 8){
+        //     $("#errorProv3").fadeIn("slow");
+        //     return false;
+        // }
+        // else{
+        //     $("#errorProv3").fadeOut();
+        // }
 
-        /* Localidad */
+        // /* Localidad */
 
-        if (localidad.length === 0){
-            $("#errorLocalidad").fadeIn("slow");
-            return false;
-        }
-        else{
-            $("#errorLocalidad").fadeOut();
-        }
+        // if (localidad.length === 0){
+        //     $("#errorLocalidad").fadeIn("slow");
+        //     return false;
+        // }
+        // else{
+        //     $("#errorLocalidad").fadeOut();
+        // }
 
-        if (!exprLetAndSpace.test(localidad)){
-            $("#errorLocalidad2").fadeIn("slow");
-            return false;
-        }
-        else{
-            $("#errorLocalidad2").fadeOut();
-        }
+        // if (!exprLetAndSpace.test(localidad)){
+        //     $("#errorLocalidad2").fadeIn("slow");
+        //     return false;
+        // }
+        // else{
+        //     $("#errorLocalidad2").fadeOut();
+        // }
 
-        if (localidad.length > 20 && localidad.length < 4){
-            $("#errorLocalidad3").fadeIn("slow");
-            return false;
-        }
-        else{
-            $("#errorLocalidad3").fadeOut();
-        }
+        // if (localidad.length > 20 && localidad.length < 4){
+        //     $("#errorLocalidad3").fadeIn("slow");
+        //     return false;
+        // }
+        // else{
+        //     $("#errorLocalidad3").fadeOut();
+        // }
 
-        /* Calle */
+        // /* Calle */
 
-        if (calle.length === 0){
-            $("#errorCalle").fadeIn("slow");
-            return false;
-        }
-        else{
-            $("#errorCalle").fadeOut();
-        }
+        // if (calle.length === 0){
+        //     $("#errorCalle").fadeIn("slow");
+        //     return false;
+        // }
+        // else{
+        //     $("#errorCalle").fadeOut();
+        // }
 
-        if (!exprLetAndSpace.test(calle)){
-            $("#errorCalle2").fadeIn("slow");
-            return false;
-        }
-        else{
-            $("#errorCalle2").fadeOut();
-        }
+        // if (!exprLetAndSpace.test(calle)){
+        //     $("#errorCalle2").fadeIn("slow");
+        //     return false;
+        // }
+        // else{
+        //     $("#errorCalle2").fadeOut();
+        // }
 
-        if (calle.length > 20 && calle.length < 4){
-            $("#errorCalle3").fadeIn("slow");
-            return false;
-        }
-        else{
-            $("#errorCalle3").fadeOut();
-        }
+        // if (calle.length > 20 && calle.length < 4){
+        //     $("#errorCalle3").fadeIn("slow");
+        //     return false;
+        // }
+        // else{
+        //     $("#errorCalle3").fadeOut();
+        // }
 
-        /* Altura */
+        // /* Altura */
 
-        if (altura.length === 0){
-            $("#errorAltura").fadeIn("slow");
-            return false;
-        }
-        else{
-            $("#errorAltura").fadeOut();
-        }
+        // if (altura.length === 0){
+        //     $("#errorAltura").fadeIn("slow");
+        //     return false;
+        // }
+        // else{
+        //     $("#errorAltura").fadeOut();
+        // }
 
-        if (!exprNum.test(altura)){
-            $("#errorAltura2").fadeIn("slow");
-            return false;
-        }
-        else{
-            $("#errorAltura2").fadeOut();
-        }
+        // if (!exprNum.test(altura)){
+        //     $("#errorAltura2").fadeIn("slow");
+        //     return false;
+        // }
+        // else{
+        //     $("#errorAltura2").fadeOut();
+        // }
 
-        if (altura.length >= 6 ){
-            $("#errorAltura3").fadeIn("slow");
-            return false;
-        }
-        else{
-            $("#errorAltura3").fadeOut();
-        }
+        // if (altura.length >= 7 ){
+        //     $("#errorAltura3").fadeIn("slow");
+        //     return false;
+        // }
+        // else{
+        //     $("#errorAltura3").fadeOut();
+        // }
 
 
     });

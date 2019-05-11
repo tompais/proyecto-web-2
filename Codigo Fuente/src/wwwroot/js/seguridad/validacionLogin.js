@@ -2,9 +2,6 @@ $(document).ready(function() {
 
     $("#btnIngresar").click(function() {
 
-        var expr = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
-        var exprLetNum = /^[0-9a-zA-Z]+$/;
-
         var nick = $('#inputEmailOrNick').val();
         var pass = $('#inputPassword').val();
 
@@ -16,14 +13,6 @@ $(document).ready(function() {
         }
         else{
             $("#errorNick").fadeOut();
-        }
-
-       /* if(!exprLetNum.test(nick) || !expr.test(nick)){
-            $("#errorNick2").fadeIn("slow");
-            return false;
-        }
-        else {
-            $("#errorNick2").fadeOut();
         }
 
         /* Password */
@@ -47,3 +36,7 @@ $(document).ready(function() {
     });
 
 });
+
+function ErrorFormulario () {
+    $("#errorForm").fadeIn("slow");
+}

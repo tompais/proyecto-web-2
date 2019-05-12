@@ -59,10 +59,10 @@
 
             <?php
 
-            require_once "..\..\Helpers\Constantes.php";
+            require_once "../../Helpers/Constantes.php";
             require_once "../../Utils/FuncionesUtiles.php";
-            require_once "..\..\Helpers\Conexion.php";
-            require_once "..\..\Enums\Roles.php";
+            require_once "../../Helpers/Conexion.php";
+            require_once "../../Enums/Roles.php";
             require_once "../../Models/Usuario.php";
 
             if ($_POST && count($_POST) && isset($_POST[Constantes::BTNINGRESAR])) {

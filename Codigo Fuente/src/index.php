@@ -22,7 +22,7 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
     <?php
-    header("location: Views/Seguridad/login.php");
+    header("location: Views/Home/Inicio.php");
     exit();
     ?>
     <script src="wwwroot\lib\jquery\jquery-3.4.0.min.js"></script>

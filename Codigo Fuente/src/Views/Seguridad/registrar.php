@@ -25,10 +25,10 @@
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
     <?php
-    require_once "..\..\Helpers\Constantes.php";
+    require_once "../../Helpers/Constantes.php";
     require_once "../../Utils/FuncionesUtiles.php";
-    require_once "..\..\Helpers\Conexion.php";
-    require_once "..\..\Enums\Roles.php";
+    require_once "../../Helpers/Conexion.php";
+    require_once "../../Enums/Roles.php";
     require_once "../../Enums/Sexos.php";
     require_once "../../Models/Sexo.php";
     require_once "../../Models/Provincia.php";

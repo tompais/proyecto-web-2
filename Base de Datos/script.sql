@@ -6077,7 +6077,7 @@ CREATE TABLE Sexo (
     constraint PK_Sexo primary key (Id)
 );
 
-CREATE TABLE Domicilio (
+CREATE TABLE Direccion (
 	Id integer NOT NULL auto_increment,
     Calle varchar(50) NOT NULL,
     Altura integer NOT NULL,
@@ -6086,10 +6086,10 @@ CREATE TABLE Domicilio (
     ProvinciaId integer NOT NULL,
     PartidoId integer NOT NULL,
     LocalidadId integer NOT NULL,
-    constraint PK_Domicilio primary key (Id),
-    constraint FK_Domicilio_Provincia foreign key (ProvinciaId) references Provincia (ID),
-    constraint FK_Domicilio_Partido foreign key (PartidoId) references Partido (ID),
-    constraint FK_Domicilio_Localidad foreign key (LocalidadId) references Localidad (ID)
+    constraint PK_Direccion primary key (Id),
+    constraint FK_Direccion_Provincia foreign key (ProvinciaId) references Provincia (ID),
+    constraint FK_Direccion_Partido foreign key (PartidoId) references Partido (ID),
+    constraint FK_Direccion_Localidad foreign key (LocalidadId) references Localidad (ID)
 );
 
 CREATE TABLE Usuario(
@@ -6100,14 +6100,14 @@ CREATE TABLE Usuario(
     Username varchar(30) UNIQUE NOT NULL,
     UPassword varchar(100) NOT NULL,
     Telefono integer NOT NULL,
-    DomicilioId integer, 
+    DireccionId integer, 
     RolId integer NOT NULL,
     SexoId integer NOT NULL,
     Email varchar(30) UNIQUE NOT NULL,
     FechaBaneo date,
     FechaBaja date,
     constraint PK_Usuario primary key (Id),
-    constraint FK_Usuario_Domicilio foreign key (DomicilioId) references Domicilio (Id),
+    constraint FK_Usuario_Direccion foreign key (DireccionId) references Direccion (Id),
     constraint FK_Usuario_Rol foreign key (RolId) references Rol (Id),
     constraint FK_Usuario_Sexo FOREIGN KEY (SexoId) REFERENCES Sexo (Id)
 );
@@ -6135,9 +6135,15 @@ INSERT INTO Sexo (Nombre) VALUES ("Masculino"),
 								("Femenino"),
                                 ("Otro");
 
-INSERT INTO Usuario (Nombre, Apellido, FechaNac, Username, UPassword, Email, RolId, Telefono, SexoId)
-VALUES ("Ezequiel", "Allio", '1996-05-07', "ezequiel", "eb6a2f962bb597f98b2c2b9c4698da19710ddfa3", "ezequiel.allio@gmail.com", 2, 1121563869, 1),
-		("Tomás", "Pais", "1995-11-15", "tpais", "c720f95d7b12b6fd252b432853bf8c0a118dd4a1", "tomas.j.pais@gmail.com", 2, 1132075813, 1),
-        ("Alejo", "Martínez", "1998-12-23", "alejovoley14", "3de5110c9559591d0178269408ecdd6d57131818", "pupe893@gmail.com", 2, 1144188686, 1),
-        ("Sebastián", "Reales", "1989-12-12", "falsoalexis", "bfa643708c7876c74d5088ea7bdf50de7c56e6b6", "falso.alexis@gmail.com", 2, 1128232503, 1),
-        ("Super", "User", "1810-05-25", "superuser", "ba2e09db98ee61790c5055b8f643c5e9b1c3f3f8", "super.user@gmail.com", 1, 111234567, 3);
+INSERT INTO Direccion (Calle, Altura, ProvinciaId, PartIdoId, LocalIdadId, Piso, Departamento) VALUES ("Aquiles", 509, 1, 3, 764, null, null),
+																										("Ángel Acuña", 1557, 1, 92, 435, null, null),
+                                                                                                        ("Llerena", 2786, 1, 3, 188, 7, 'B'),
+                                                                                                        ("El Infierno", 666, 1, 3, 764, null, null),
+                                                                                                        ("Calle Falsa", 123, 1, 3, 764, null, null);
+
+INSERT INTO Usuario (Nombre, ApellIdo, FechaNac, Username, UPassword, Email, RolId, Telefono, SexoId, DireccionId)
+VALUES ("Ezequiel", "Allio", '1996-05-07', "ezequiel", "eb6a2f962bb597f98b2c2b9c4698da19710ddfa3", "ezequiel.allio@gmail.com", 2, 1121563869, 1, 5),
+		("Tomás", "Pais", "1995-11-15", "tpais", "c720f95d7b12b6fd252b432853bf8c0a118dd4a1", "tomas.j.pais@gmail.com", 2, 1132075813, 1, 1),
+        ("Alejo", "Martínez", "1998-12-23", "alejovoley14", "3de5110c9559591d0178269408ecdd6d57131818", "pupe893@gmail.com", 2, 1144188686, 1, 2),
+        ("Sebastián", "Reales", "1989-12-12", "falsoalexis", "bfa643708c7876c74d5088ea7bdf50de7c56e6b6", "falso.alexis@gmail.com", 2, 1128232503, 1, 3),
+        ("Super", "User", "1810-05-25", "superuser", "ba2e09db98ee61790c5055b8f643c5e9b1c3f3f8", "super.user@gmail.com", 1, 111234567, 3, 4);

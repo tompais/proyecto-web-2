@@ -30,6 +30,11 @@
     require_once "..\..\Helpers\Conexion.php";
     require_once "..\..\Enums\Roles.php";
     require_once "../../Enums/Sexos.php";
+    require_once "../../Models/Sexo.php";
+    require_once "../../Models/Provincia.php";
+    require_once "../../Models/Partido.php";
+    require_once "../../Models/Localidad.php";
+    require_once "../../Models/Direccion.php";
     require_once "../../Models/Usuario.php";
 
     if ($_POST && count($_POST) && isset($_POST[Constantes::BTNREGISTRAR])) {
@@ -180,7 +185,7 @@
                         <select class="form-control" name="selectSexo" id="selectSexo">
                             <?php
 
-                            $query = "SELECT * FROM Sexo";
+                            $query = "SELECT * FROM Sexo ORDER BY Id";
 
                             $conn = new Conexion();
 
@@ -196,8 +201,14 @@
                                 exit();
                             }
 
+                            $sexo = new Sexo();
+
+
                             while ($conn->recuperarResultadoPreparedStatement()) {
-                                echo "<option value='" . $sexos["Id"] . "'>" . $sexos["Nombre"] . "</option>";
+
+                                $sexo->setId($sexos["Id"]);
+                                $sexo->setNombre($sexos["Nombre"]);
+                                echo "<option value='" . $sexo->getId() . "'>" . $sexo->getNombre() . "</option>";
                             }
 
                             ?>
@@ -226,7 +237,39 @@
                     </div>
                 </div>
                 <div class="col-md">
-                    
+                    <div class="form-group">
+                        <label for="selectProvincia">Provincia</label>
+                        <select class="form-control" name="selectProvincia" id="selectProvincia">
+                            <?php
+
+                            $query = "SELECT * FROM Provincia ORDER BY Nombre";
+
+                            $conn = new Conexion();
+
+                            if (
+                                !$conn->setPreparedStmt($query)
+                                || !$conn->ejecutarPreparedStatement()
+                                || !$conn->almacenarResultadoPreparedStatementEnMemoria()
+                                || !$conn->getCantFilasSeleccionadasPreparedStatement()
+                                || !($provincias = $conn->getArrayAsociativoPreparedStatement())
+                            ) {
+                                header("location: ../NoCompletado/noCompletado.php");
+                                $conn->desconectar();
+                                exit();
+                            }
+
+                            $provincia = new Provincia();
+
+                            while ($conn->recuperarResultadoPreparedStatement()) {
+
+                                $provincia->setId($provincias["Id"]);
+                                $provincia->setNombre($provincias["Nombre"]);
+                                echo "<option value='" . $provincia->getId() . "'>" . $provincia->getNombre() . "</option>";
+                            }
+
+                            ?>
+                        </select>
+                    </div>
                 </div>
             </div>
 
